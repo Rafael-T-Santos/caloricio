@@ -280,6 +280,22 @@ select:focus {
   opacity: 1;
 }
 
+/* O atributo hidden vira display:none pela folha do navegador, mas uma regra
+   de autor (display:flex abaixo) vence esse padrão. Sem isto o painel fechado
+   continua ocupando a tela: no mobile ele sai de vista pelo translateY, mas no
+   desktop fica centralizado com opacity 0 — invisível e engolindo os cliques. */
+.seletor-painel[hidden],
+.seletor-fundo[hidden] {
+  display: none;
+}
+
+/* Rede de segurança para os ~200ms de transição, quando ainda está visível
+   mas já não deveria receber clique. */
+.seletor-painel:not(.aberto),
+.seletor-fundo:not(.aberto) {
+  pointer-events: none;
+}
+
 /* Mobile: folha que sobe de baixo, onde o polegar alcança. */
 .seletor-painel {
   position: fixed;
