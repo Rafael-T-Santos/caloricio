@@ -42,9 +42,24 @@ e o motor de regras do mascote.
 | `mascote.js` | Qual fantasia vestir e quando ficar desconfiado. Sem DOM. |
 | `seletor.js` | Seletor de exercício em dois níveis (categoria → exercício). |
 | `app.js` | Única camada que toca o DOM. |
+| `tools/` | Pipeline de arte (só roda na máquina, não vai pro navegador). |
 
 O seletor é próprio em vez de `<select>` porque o picker nativo do Android
 achata os `<optgroup>` e a hierarquia categoria → exercício se perde.
+
+## Processando arte nova
+
+Depois de salvar a arte 2-em-1 gerada pela IA em `img/sources/`:
+
+```bash
+node tools/gerar-artes.cjs musculacao caminhada    # um ou vários nomes
+```
+
+O pipeline separa os dois personagens, remove o fundo branco por flood-fill
+das bordas, elimina a marca d'água da IA, descarta fragmentos que vazaram do
+personagem vizinho, normaliza em 520x620 com os pés na mesma linha e grava em
+`img/`. Sai de ~4,8MB para ~130KB por arte. É determinístico: rodar de novo na
+mesma origem gera o mesmo arquivo.
 
 ## Adicionando fantasias e reações novas
 
