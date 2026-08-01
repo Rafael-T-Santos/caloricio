@@ -7,9 +7,11 @@ import {
   FANTASIAS,
   FANTASIA_GENERICA,
   DESCRICOES_VISUAL,
+  VISUAIS_SEM_PISCADA,
   avaliarRegras,
   estadoDoMascote,
   caminhoImagem,
+  podePiscar,
 } from './mascote.js';
 
 test('nenhuma regra bate → null (duração normal)', () => {
@@ -78,6 +80,35 @@ test('toda imagem referenciada existe no disco', () => {
       assert.ok(fs.existsSync(caminho), `arquivo faltando: ${caminho}`);
     }
   }
+});
+
+test('todo visual que pisca tem o quadro de piscada no disco', () => {
+  for (const v of [...Object.values(FANTASIAS), FANTASIA_GENERICA]) {
+    if (!podePiscar(v, false)) continue;
+    const caminho = caminhoImagem(v, false, true);
+    assert.ok(fs.existsSync(caminho), `quadro de piscada faltando: ${caminho}`);
+  }
+});
+
+test('visual sem piscada não recebe quadro de piscada', () => {
+  for (const v of VISUAIS_SEM_PISCADA) {
+    assert.equal(podePiscar(v, false), false);
+  }
+  const e = estadoDoMascote('Natação', 45);
+  assert.equal(e.imagemPiscando, null);
+});
+
+test('desconfiado nunca pisca — os olhos já estão semicerrados', () => {
+  const e = estadoDoMascote('Corrida', 999);
+  assert.equal(e.desconfiado, true);
+  assert.equal(e.imagemPiscando, null);
+  assert.equal(podePiscar('corrida', true), false);
+});
+
+test('estado normal aponta para o quadro de piscada correspondente', () => {
+  const e = estadoDoMascote('Corrida', 60);
+  assert.equal(e.imagem, 'img/caloricio-corrida-normal.png');
+  assert.equal(e.imagemPiscando, 'img/caloricio-corrida-blink.png');
 });
 
 test('duração absurda → desconfiado com legenda, mantendo a fantasia da categoria', () => {

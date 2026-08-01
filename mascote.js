@@ -41,12 +41,26 @@ export const FANTASIAS = {
 // uma imagem que não existe. Também é o visual do estado inicial.
 export const FANTASIA_GENERICA = 'gpt';
 
-// Cada visual vira 2 arquivos de imagem: img/caloricio-<visual>-normal.png e
-// img/caloricio-<visual>-desconfiado.png. 'neutro' (antes de qualquer seleção)
-// usa a mesma arte genérica.
-export function caminhoImagem(visual, desconfiado) {
+// Visuais que não têm quadro de piscada. A natação está aqui porque os óculos
+// cobrem os olhos: apagar o olho apagaria os óculos junto, e o mascote perderia
+// o equipamento no meio da piscada. Quem está de óculos de natação não pisca.
+export const VISUAIS_SEM_PISCADA = new Set(['natacao']);
+
+export function podePiscar(visual, desconfiado) {
+  // O desconfiado já tem os olhos semicerrados de propósito — piscar por cima
+  // disso descaracteriza a reação.
+  if (desconfiado) return false;
   const chave = visual === 'neutro' ? FANTASIA_GENERICA : visual;
-  return `img/caloricio-${chave}-${desconfiado ? 'desconfiado' : 'normal'}.png`;
+  return !VISUAIS_SEM_PISCADA.has(chave);
+}
+
+// Cada visual vira até 3 arquivos: img/caloricio-<visual>-normal.png,
+// -desconfiado.png e -blink.png. 'neutro' (antes de qualquer seleção) usa a
+// mesma arte genérica.
+export function caminhoImagem(visual, desconfiado, piscando = false) {
+  const chave = visual === 'neutro' ? FANTASIA_GENERICA : visual;
+  const estado = desconfiado ? 'desconfiado' : piscando ? 'blink' : 'normal';
+  return `img/caloricio-${chave}-${estado}.png`;
 }
 
 // Descrições por visual, usadas como texto alternativo pra leitor de tela.
@@ -108,5 +122,8 @@ export function estadoDoMascote(categoria, duracaoMin) {
       ? `${DESCRICOES_VISUAL[visual]}, com cara de desconfiado`
       : DESCRICOES_VISUAL[visual],
     imagem: caminhoImagem(visual, desconfiado),
+    imagemPiscando: podePiscar(visual, desconfiado)
+      ? caminhoImagem(visual, desconfiado, true)
+      : null,
   };
 }

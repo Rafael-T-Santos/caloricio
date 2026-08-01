@@ -61,6 +61,23 @@ personagem vizinho, normaliza em 520x620 com os pés na mesma linha e grava em
 `img/`. Sai de ~4,8MB para ~130KB por arte. É determinístico: rodar de novo na
 mesma origem gera o mesmo arquivo.
 
+### Quadro de piscada
+
+```bash
+node tools/gerar-piscada.cjs corrida lutas    # gera img/caloricio-<nome>-blink.png
+```
+
+Desenha a pálpebra fechada por cima da arte, em vez de gerar por IA: a piscada
+dura ~110ms, então o resto do corpo precisa ser pixel a pixel idêntico ao quadro
+de olho aberto — qualquer regeração desloca o personagem e a troca lê como
+tremida. O script detecta a esclera, apaga o olho por flood até encontrar pele
+(a sobrancelha fica intacta porque há um vão de pele entre ela e o olho) e
+desenha um arco com a espessura do contorno da própria arte.
+
+A natação não tem piscada: os óculos cobrem os olhos e apagá-los levaria os
+óculos junto. Está registrado em `VISUAIS_SEM_PISCADA` (`mascote.js`), e os
+testes verificam que todo visual que pode piscar tem o arquivo no disco.
+
 ## Adicionando fantasias e reações novas
 
 - **Fantasia nova**: gere a arte com os prompts de `MASCOTE-PROMPT.md`, salve em

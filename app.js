@@ -30,12 +30,15 @@ function duracaoAtual() {
 }
 
 let fimDaReacao = null;
+let estadoAtual = null;
 
 function aplicarMascote(estado) {
   const mudou = mascoteImg.getAttribute('src') !== estado.imagem;
+  estadoAtual = estado;
   mascoteImg.src = estado.imagem;
   mascoteImg.alt = estado.descricao;
   legenda.textContent = estado.legenda;
+  if (estado.imagemPiscando) precarregar(estado.imagemPiscando);
   if (!mudou) return;
   mascote.classList.remove('reagindo', 'pulando');
   // reinicia a animação mesmo em trocas consecutivas
@@ -114,6 +117,41 @@ form.addEventListener('submit', (e) => {
 // respeita quem pediu menos movimento no sistema.
 const menosMovimento = window.matchMedia('(prefers-reduced-motion: reduce)');
 
+// Mantém os quadros de piscada em cache: trocar o src sem o arquivo carregado
+// deixaria o mascote sem imagem por um instante, o que aparece feio num
+// intervalo de 110ms.
+const jaCarregadas = new Set();
+function precarregar(caminho) {
+  if (jaCarregadas.has(caminho)) return;
+  jaCarregadas.add(caminho);
+  new Image().src = caminho;
+}
+
+// Piscada: troca o quadro por ~110ms. De vez em quando pisca duas vezes
+// seguidas, que é o que pessoas de verdade fazem.
+function piscar() {
+  const alvo = estadoAtual?.imagemPiscando;
+  if (!alvo || !jaCarregadas.has(alvo)) return;
+  const aberto = estadoAtual.imagem;
+  const fechar = () => {
+    if (estadoAtual?.imagem !== aberto) return;
+    mascoteImg.src = alvo;
+    setTimeout(() => {
+      if (estadoAtual?.imagem === aberto) mascoteImg.src = aberto;
+    }, 110);
+  };
+  fechar();
+  if (Math.random() < 0.3) setTimeout(fechar, 260);
+}
+
+function agendarPiscada() {
+  const espera = 2800 + Math.random() * 4200;
+  setTimeout(() => {
+    if (!document.hidden && !menosMovimento.matches && !seletor.estaAberto()) piscar();
+    agendarPiscada();
+  }, espera);
+}
+
 function agendarPulinho() {
   const espera = 6000 + Math.random() * 7000;
   setTimeout(() => {
@@ -131,5 +169,8 @@ function agendarPulinho() {
   }, espera);
 }
 
-mascoteImg.alt = DESCRICOES_VISUAL.neutro;
+// Estado inicial: a arte genérica, mas com a descrição de "ainda não escolheu"
+// em vez da descrição da fantasia genérica.
+aplicarMascote({ ...estadoDoMascote(null, null), descricao: DESCRICOES_VISUAL.neutro });
 agendarPulinho();
+agendarPiscada();
