@@ -64,14 +64,46 @@ Cada bloco abaixo é uma mensagem separada. Sempre comece com
 `Same character, same rules as before. New outfit:` para reforçar a
 consistência.
 
-### Musculação (REFAZER — a versão atual saiu com cabelo preto e halteres cortados)
+### Musculação (REFAZER — 2ª tentativa: o haltere ficou por cima do punho, não na mão)
+
+**O problema:** modelos de imagem erram sistematicamente mão segurando objeto
+rígido. Na tentativa anterior a barra do haltere foi desenhada atravessando
+por cima do punho fechado, em vez dos dedos envolverem a barra.
+
+**A solução:** não pedir para segurar nada. Nas Lutas as luvas de boxe
+ficaram perfeitas porque são **calçadas**, não agarradas. Mesmo princípio aqui:
+equipamento vestido no corpo, e o haltere apoiado no chão.
 
 ```
 Same character, same rules as before. New outfit: weightlifting.
-Sleeveless gym stringer tank top with the flame logo, athletic shorts,
-lifting gloves, and a small dumbbell held in ONE hand only, kept close to the
-body. Reminder: the hair must be BROWN, not black. Keep the dumbbell well
-inside the frame and far from the other character.
+
+IMPORTANT: the character must NOT hold anything in his hands. Both hands are
+empty, relaxed, hanging down at his sides in loose fists — exactly like the
+hands in the original reference image. Do not draw any object touching,
+crossing or overlapping the hands.
+
+Outfit worn on the body: a sleeveless gym stringer tank top with the flame
+logo, athletic shorts, a wide weightlifting belt around the waist, fingerless
+lifting gloves worn on both hands, and training shoes.
+
+Equipment: ONE dumbbell lying flat on the ground next to his right foot,
+clearly separated from his body, fully inside the frame. The dumbbell rests on
+the floor and is not connected to the character in any way.
+```
+
+**Se ainda assim não gostar**, tente esta variante — mantém o haltere na mão,
+mas descreve a pegada explicitamente em vez de deixar o modelo improvisar:
+
+```
+Same character, same rules as before. New outfit: weightlifting.
+Sleeveless gym stringer tank top with the flame logo, athletic shorts, and
+training shoes.
+
+He holds ONE dumbbell in his right hand, arm hanging straight down at his side.
+Draw the grip correctly: his fingers curl AROUND the dumbbell bar and close
+over the front of it, the thumb wraps from the other side, and the bar is
+hidden behind the fingers where it passes through the hand. The bar must never
+be drawn on top of or across the closed fist. The left hand is empty.
 ```
 
 ### Caminhada
