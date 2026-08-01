@@ -68,11 +68,19 @@
         </div>
       </div>
 
+      <!--
+        Seletor próprio em vez de <select>: o picker nativo do Android achata
+        os optgroups e a hierarquia categoria > exercício se perde. Ver seletor.js.
+      -->
       <div class="campo">
-        <label for="exercicio">Exercício</label>
-        <select id="exercicio" name="exercicio" required>
-          <!-- opções geradas em app.js a partir da tabela MET (fonte única) -->
-        </select>
+        <span class="rotulo" id="rotulo-exercicio">Exercício</span>
+        <button type="button" class="seletor-botao" id="seletor-botao"
+                aria-haspopup="dialog" aria-expanded="false"
+                aria-labelledby="rotulo-exercicio seletor-valor">
+          <span class="seletor-valor" id="seletor-valor">Selecione o exercício…</span>
+          <span class="seletor-seta" aria-hidden="true">▾</span>
+        </button>
+        <p class="erro" id="erro-exercicio"></p>
       </div>
 
       <div class="campo">
@@ -95,6 +103,19 @@
       <p>TMB pela fórmula de Mifflin-St Jeor · valores MET do Compendium of Physical Activities. Resultados são estimativas.</p>
     </footer>
   </main>
+
+  <div class="seletor-fundo" id="seletor-fundo" hidden></div>
+  <div class="seletor-painel" id="seletor-painel" role="dialog" aria-modal="true"
+       aria-labelledby="seletor-titulo" hidden>
+    <header class="seletor-cabecalho">
+      <button type="button" class="seletor-icone-botao" id="seletor-voltar" hidden
+              aria-label="Voltar para as categorias">‹</button>
+      <h2 class="seletor-titulo" id="seletor-titulo">Escolha a categoria</h2>
+      <button type="button" class="seletor-icone-botao" id="seletor-fechar"
+              aria-label="Fechar">×</button>
+    </header>
+    <ul class="seletor-lista" id="seletor-lista" role="listbox"></ul>
+  </div>
 
   <script type="module" src="app.js"></script>
 </body>

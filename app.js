@@ -1,10 +1,10 @@
 // Camada de UI: única parte que toca o DOM. calc.js e mascote.js são puros.
 // Todo conteúdo dinâmico entra via textContent — nunca innerHTML.
-import { MET_TABLE, computeBMR, computeGasto, validarCampos, agruparPorCategoria } from './calc.js';
+import { computeBMR, computeGasto, validarCampos, agruparPorCategoria } from './calc.js';
 import { estadoDoMascote, DESCRICOES_VISUAL } from './mascote.js';
+import { criarSeletorExercicio } from './seletor.js';
 
 const form = document.getElementById('form');
-const selectExercicio = document.getElementById('exercicio');
 const mascote = document.getElementById('mascote');
 const mascoteImg = document.getElementById('mascote-img');
 const legenda = document.getElementById('legenda');
@@ -12,30 +12,21 @@ const resultado = document.getElementById('resultado');
 const kcalEl = document.getElementById('kcal');
 const detalheEl = document.getElementById('detalhe');
 
-// Dropdown gerado da tabela MET (fonte única) com optgroup por categoria.
-function montarDropdown() {
-  const placeholder = document.createElement('option');
-  placeholder.value = '';
-  placeholder.textContent = 'Selecione o exercício...';
-  placeholder.disabled = true;
-  placeholder.selected = true;
-  selectExercicio.appendChild(placeholder);
-
-  for (const grupo of agruparPorCategoria()) {
-    const optgroup = document.createElement('optgroup');
-    optgroup.label = grupo.categoria;
-    for (const item of grupo.itens) {
-      const option = document.createElement('option');
-      option.value = item.nome;
-      option.textContent = `${item.nome} — MET ${item.met.toLocaleString('pt-BR')}`;
-      optgroup.appendChild(option);
-    }
-    selectExercicio.appendChild(optgroup);
-  }
-}
+// O seletor é alimentado pela mesma tabela MET do cálculo (fonte única).
+const seletor = criarSeletorExercicio({
+  grupos: agruparPorCategoria(),
+  aoEscolher: (item) => {
+    seletor.marcarErro(false);
+    aplicarMascote(estadoDoMascote(item.categoria, duracaoAtual()));
+  },
+});
 
 function exercicioSelecionado() {
-  return MET_TABLE.find((i) => i.nome === selectExercicio.value) ?? null;
+  return seletor.valor;
+}
+
+function duracaoAtual() {
+  return Number(document.getElementById('duracao').value) || null;
 }
 
 let fimDaReacao = null;
@@ -64,21 +55,13 @@ function mostrarErros(erros) {
   }
 }
 
-// Reação em tempo real: ao escolher o exercício o Caloricio já se veste,
-// antes mesmo de calcular.
-selectExercicio.addEventListener('change', () => {
-  const item = exercicioSelecionado();
-  if (!item) return;
-  const duracao = Number(document.getElementById('duracao').value) || null;
-  aplicarMascote(estadoDoMascote(item.categoria, duracao));
-});
-
-// Se a duração mudar depois do exercício escolhido, reavalia o desconfiado.
+// A reação em tempo real ao escolher o exercício acontece no callback
+// aoEscolher do seletor. Aqui só falta reavaliar o "desconfiado" quando a
+// duração muda depois de o exercício já estar escolhido.
 document.getElementById('duracao').addEventListener('input', () => {
   const item = exercicioSelecionado();
   if (!item) return;
-  const duracao = Number(document.getElementById('duracao').value) || null;
-  aplicarMascote(estadoDoMascote(item.categoria, duracao));
+  aplicarMascote(estadoDoMascote(item.categoria, duracaoAtual()));
 });
 
 form.addEventListener('submit', (e) => {
@@ -94,10 +77,9 @@ form.addEventListener('submit', (e) => {
 
   const { ok, erros } = validarCampos(valores);
   const item = exercicioSelecionado();
-  if (!item) {
-    erros.exercicio = true;
-    selectExercicio.focus();
-  }
+  document.getElementById('erro-exercicio').textContent = item ? '' : 'Escolha um exercício';
+  seletor.marcarErro(!item);
+  if (!item) seletor.focar();
   mostrarErros(erros);
   if (!ok || !item) {
     // não deixa um resultado antigo visível junto de um formulário inválido
@@ -135,7 +117,13 @@ const menosMovimento = window.matchMedia('(prefers-reduced-motion: reduce)');
 function agendarPulinho() {
   const espera = 6000 + Math.random() * 7000;
   setTimeout(() => {
-    if (!document.hidden && !menosMovimento.matches && !mascote.classList.contains('reagindo')) {
+    // não pula com o painel de seleção aberto: rouba atenção de quem escolhe
+    if (
+      !document.hidden &&
+      !menosMovimento.matches &&
+      !seletor.estaAberto() &&
+      !mascote.classList.contains('reagindo')
+    ) {
       mascote.classList.add('pulando');
       setTimeout(() => mascote.classList.remove('pulando'), 900);
     }
@@ -143,6 +131,5 @@ function agendarPulinho() {
   }, espera);
 }
 
-montarDropdown();
 mascoteImg.alt = DESCRICOES_VISUAL.neutro;
 agendarPulinho();

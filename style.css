@@ -216,6 +216,236 @@ select:focus {
   display: none;
 }
 
+/* ---------- Seletor de exercício em dois níveis ---------- */
+
+.rotulo {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+.seletor-botao {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 1rem;
+  text-align: left;
+  color: #6b7280;
+  background: var(--color-card);
+  border: 2px solid var(--color-borda);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.seletor-botao.preenchido {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.seletor-botao.invalido {
+  border-color: var(--color-erro);
+}
+
+.seletor-botao:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.seletor-valor {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.seletor-seta {
+  color: var(--color-accent-dark);
+  font-size: 0.8rem;
+}
+
+.seletor-fundo {
+  position: fixed;
+  inset: 0;
+  background: rgba(31, 41, 55, 0.45);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 10;
+}
+
+.seletor-fundo.aberto {
+  opacity: 1;
+}
+
+/* Mobile: folha que sobe de baixo, onde o polegar alcança. */
+.seletor-painel {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  max-height: 82vh;
+  background: var(--color-card);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18);
+  transform: translateY(100%);
+  transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.seletor-painel.aberto {
+  transform: translateY(0);
+}
+
+.seletor-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 8px;
+  border-bottom: 2px solid var(--color-borda);
+}
+
+.seletor-titulo {
+  flex: 1;
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 900;
+  text-align: center;
+  color: var(--color-accent-dark);
+}
+
+.seletor-icone-botao {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  font-family: inherit;
+  font-size: 1.6rem;
+  line-height: 1;
+  color: var(--color-text);
+  background: none;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.seletor-icone-botao:hover {
+  background: #f3f4f6;
+}
+
+.seletor-icone-botao:focus-visible {
+  outline: 3px solid var(--color-accent);
+}
+
+/* mantém o título centralizado quando o botão voltar está escondido */
+.seletor-icone-botao[hidden] {
+  display: block;
+  visibility: hidden;
+}
+
+.seletor-lista {
+  flex: 1;
+  overflow-y: auto;
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.seletor-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.seletor-item:hover {
+  background: #f3f4f6;
+}
+
+.seletor-item:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: -3px;
+}
+
+.seletor-item.ativo {
+  background: #f2fbe6;
+}
+
+.seletor-icone {
+  font-size: 1.5rem;
+  width: 34px;
+  text-align: center;
+  flex: none;
+}
+
+.seletor-texto {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.seletor-nome {
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.seletor-sub {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.seletor-avanca {
+  color: #9ca3af;
+  font-size: 1.3rem;
+  flex: none;
+}
+
+.seletor-marca {
+  color: var(--color-accent-dark);
+  font-weight: 900;
+  flex: none;
+}
+
+body.sem-rolagem {
+  overflow: hidden;
+}
+
+/* Desktop: caixa centralizada, já que não existe polegar aqui. */
+@media (min-width: 560px) {
+  .seletor-painel {
+    top: 50%;
+    left: 50%;
+    right: auto;
+    bottom: auto;
+    width: 420px;
+    max-height: 70vh;
+    border-radius: 18px;
+    transform: translate(-50%, -46%) scale(0.96);
+    opacity: 0;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+  }
+
+  .seletor-painel.aberto {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seletor-painel,
+  .seletor-fundo {
+    transition: none;
+  }
+}
+
 .calcular {
   width: 100%;
   min-height: 48px;
