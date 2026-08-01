@@ -42,30 +42,19 @@ body {
 
 .mascote {
   margin: 0 auto 20px;
-  width: 200px;
+  width: 220px;
   text-align: center;
 }
 
-.mascote svg {
+.mascote img {
   width: 100%;
   height: auto;
+  display: block;
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  padding: 10px;
 }
-
-/* troca de fantasia: só o grupo do visual ativo aparece */
-.fantasia {
-  display: none;
-}
-
-.mascote[data-visual='generica'] .fantasia-generica { display: block; }
-.mascote[data-visual='corrida'] .fantasia-corrida { display: block; }
-.mascote[data-visual='natacao'] .fantasia-natacao { display: block; }
-.mascote[data-visual='musculacao'] .fantasia-musculacao { display: block; }
-.mascote[data-visual='bike'] .fantasia-bike { display: block; }
-
-/* troca de rosto */
-.rosto-desconfiado { display: none; }
-.mascote[data-desconfiado='true'] .rosto-normal { display: none; }
-.mascote[data-desconfiado='true'] .rosto-desconfiado { display: block; }
 
 /* pulinho ao trocar de estado (climax emocional do reveal) */
 @keyframes pulo {
@@ -75,7 +64,7 @@ body {
   100% { transform: translateY(0); }
 }
 
-.mascote.reagindo svg {
+.mascote.reagindo img {
   animation: pulo 0.45s ease;
 }
 

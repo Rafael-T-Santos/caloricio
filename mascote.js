@@ -20,9 +20,10 @@ export const TETOS_DURACAO = {
   'Bem-estar': 240,
 };
 
-// Fantasias desenhadas no lançamento. Categorias fora deste mapa usam o
-// visual genérico até a arte ficar pronta — adicionar uma fantasia nova é
-// só acrescentar uma linha aqui + o grupo SVG correspondente.
+// Fantasias com arte pronta (ilustração gerada + recortada em img/). Categorias
+// fora deste mapa usam o visual genérico até a arte ficar pronta — adicionar
+// uma fantasia nova é só acrescentar uma linha aqui + os 2 arquivos de imagem
+// (normal/desconfiado) em img/.
 export const FANTASIAS = {
   Corrida: 'corrida',
   'Natação': 'natacao',
@@ -30,7 +31,15 @@ export const FANTASIAS = {
   Bike: 'bike',
 };
 
-export const FANTASIA_GENERICA = 'generica';
+export const FANTASIA_GENERICA = 'gpt';
+
+// Cada visual vira 2 arquivos de imagem: img/caloricio-<visual>-normal.png e
+// img/caloricio-<visual>-desconfiado.png. 'neutro' (antes de qualquer seleção)
+// usa a mesma arte genérica.
+export function caminhoImagem(visual, desconfiado) {
+  const chave = visual === 'neutro' ? FANTASIA_GENERICA : visual;
+  return `img/caloricio-${chave}-${desconfiado ? 'desconfiado' : 'normal'}.png`;
+}
 
 // Descrições por visual, usadas como texto alternativo pra leitor de tela.
 export const DESCRICOES_VISUAL = {
@@ -70,22 +79,18 @@ export function avaliarRegras(input, regras = REGRAS) {
 }
 
 // Estado completo do mascote para uma seleção: qual visual vestir, se está
-// desconfiado, e a legenda/descrição a exibir.
+// desconfiado, a legenda/descrição a exibir, e o caminho da imagem a mostrar.
 export function estadoDoMascote(categoria, duracaoMin) {
   const visual = FANTASIAS[categoria] ?? FANTASIA_GENERICA;
   const regra = duracaoMin != null ? avaliarRegras({ categoria, duracaoMin }) : null;
-  if (regra) {
-    return {
-      visual,
-      desconfiado: true,
-      legenda: regra.legenda,
-      descricao: `${DESCRICOES_VISUAL[visual]}, com cara de desconfiado`,
-    };
-  }
+  const desconfiado = Boolean(regra);
   return {
     visual,
-    desconfiado: false,
-    legenda: '',
-    descricao: DESCRICOES_VISUAL[visual],
+    desconfiado,
+    legenda: regra ? regra.legenda : '',
+    descricao: desconfiado
+      ? `${DESCRICOES_VISUAL[visual]}, com cara de desconfiado`
+      : DESCRICOES_VISUAL[visual],
+    imagem: caminhoImagem(visual, desconfiado),
   };
 }

@@ -7,6 +7,7 @@ import {
   FANTASIA_GENERICA,
   avaliarRegras,
   estadoDoMascote,
+  caminhoImagem,
 } from './mascote.js';
 
 test('nenhuma regra bate → null (duração normal)', () => {
@@ -65,4 +66,19 @@ test('sem duração informada, mascote só veste a fantasia (sem avaliar regras)
   const e = estadoDoMascote('Corrida', null);
   assert.equal(e.visual, 'corrida');
   assert.equal(e.desconfiado, false);
+});
+
+test('caminhoImagem monta o arquivo certo por visual e estado', () => {
+  assert.equal(caminhoImagem('corrida', false), 'img/caloricio-corrida-normal.png');
+  assert.equal(caminhoImagem('corrida', true), 'img/caloricio-corrida-desconfiado.png');
+  assert.equal(caminhoImagem('neutro', false), `img/caloricio-${FANTASIA_GENERICA}-normal.png`);
+});
+
+test('estadoDoMascote inclui o caminho da imagem correspondente', () => {
+  const e1 = estadoDoMascote('Natação', 45);
+  assert.equal(e1.imagem, 'img/caloricio-natacao-normal.png');
+  const e2 = estadoDoMascote('Corrida', 999);
+  assert.equal(e2.imagem, 'img/caloricio-corrida-desconfiado.png');
+  const e3 = estadoDoMascote('Lutas', 45);
+  assert.equal(e3.imagem, `img/caloricio-${FANTASIA_GENERICA}-normal.png`);
 });

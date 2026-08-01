@@ -6,8 +6,8 @@ import { estadoDoMascote, DESCRICOES_VISUAL } from './mascote.js';
 const form = document.getElementById('form');
 const selectExercicio = document.getElementById('exercicio');
 const mascote = document.getElementById('mascote');
+const mascoteImg = document.getElementById('mascote-img');
 const legenda = document.getElementById('legenda');
-const mascoteDesc = document.getElementById('mascote-desc');
 const resultado = document.getElementById('resultado');
 const kcalEl = document.getElementById('kcal');
 const detalheEl = document.getElementById('detalhe');
@@ -39,13 +39,10 @@ function exercicioSelecionado() {
 }
 
 function aplicarMascote(estado) {
-  const mudou =
-    mascote.dataset.visual !== estado.visual ||
-    mascote.dataset.desconfiado !== String(estado.desconfiado);
-  mascote.dataset.visual = estado.visual;
-  mascote.dataset.desconfiado = String(estado.desconfiado);
+  const mudou = mascoteImg.getAttribute('src') !== estado.imagem;
+  mascoteImg.src = estado.imagem;
+  mascoteImg.alt = estado.descricao;
   legenda.textContent = estado.legenda;
-  mascoteDesc.textContent = estado.descricao;
   if (mudou) {
     mascote.classList.remove('reagindo');
     // reinicia a animação de pulo mesmo em trocas consecutivas
@@ -128,4 +125,4 @@ form.addEventListener('submit', (e) => {
 });
 
 montarDropdown();
-mascoteDesc.textContent = DESCRICOES_VISUAL.neutro;
+mascoteImg.alt = DESCRICOES_VISUAL.neutro;
