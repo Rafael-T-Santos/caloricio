@@ -37,6 +37,14 @@ export const FANTASIAS = {
   'Bem-estar': 'bemestar',
 };
 
+// Fantasia de um exercício específico, quando ele merece um visual próprio
+// dentro da categoria (boxe e muay thai não se vestem como jiu-jitsu). O que
+// não estiver aqui usa a fantasia da categoria — as quatro faixas de Corrida,
+// por exemplo, só mudam de velocidade, não de roupa.
+// Para adicionar: uma linha aqui, uma em DESCRICOES_VISUAL, e os arquivos
+// -normal/-desconfiado/-blink em img/. Os testes acusam se faltar qualquer um.
+export const FANTASIAS_POR_EXERCICIO = {};
+
 // Rede de segurança: categoria sem fantasia mapeada cai aqui em vez de pedir
 // uma imagem que não existe. Também é o visual do estado inicial.
 export const FANTASIA_GENERICA = 'gpt';
@@ -110,8 +118,9 @@ export function avaliarRegras(input, regras = REGRAS) {
 
 // Estado completo do mascote para uma seleção: qual visual vestir, se está
 // desconfiado, a legenda/descrição a exibir, e o caminho da imagem a mostrar.
-export function estadoDoMascote(categoria, duracaoMin) {
-  const visual = FANTASIAS[categoria] ?? FANTASIA_GENERICA;
+export function estadoDoMascote(categoria, duracaoMin, exercicio = null) {
+  const visual =
+    (exercicio && FANTASIAS_POR_EXERCICIO[exercicio]) ?? FANTASIAS[categoria] ?? FANTASIA_GENERICA;
   const regra = duracaoMin != null ? avaliarRegras({ categoria, duracaoMin }) : null;
   const desconfiado = Boolean(regra);
   return {

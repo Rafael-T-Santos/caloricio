@@ -162,6 +162,135 @@ body and fully inside the frame.
 
 ---
 
+## 3b. Fantasias por exercício (não por categoria)
+
+Dá pra ter uma arte por exercício, mas **não vale a pena para os 38**: boa parte
+tem exatamente a mesma roupa e muda só a intensidade. As quatro faixas de
+Corrida (8, 10, 12 e 14 km/h) usam o mesmo uniforme; desenhar quatro seria
+gerar a mesma imagem quatro vezes.
+
+Contando só o que é visualmente distinto, dá **21 visuais** — 10 que já existem
+e 12 novos.
+
+### Exercícios que continuam usando a fantasia da categoria
+
+| Fantasia atual | Cobre |
+|---|---|
+| `caminhada` | as 4 caminhadas (só muda a velocidade e a inclinação) |
+| `corrida` | as 4 corridas |
+| `bike` | os 4 ciclismos de rua |
+| `natacao` | natação leve, moderada e vigorosa |
+| `musculacao` | musculação leve e moderada/vigorosa |
+| `esportes` | futebol recreativo e competitivo |
+| `cardio` | elíptico e remo (os dois são máquina, a roupa é a mesma) |
+| `lutas` | jiu-jitsu |
+| `funcional` | funcional e crossfit |
+| `bemestar` | yoga |
+
+### Os 12 que merecem arte própria
+
+Mesmo fluxo: mesma conversa, prompt-base já enviado, um pedido por mensagem.
+
+#### Spinning (bike indoor) — `caloricio-spinning.png`
+```
+Same character, same rules as before. New outfit: indoor spinning class.
+A fitted sleeveless cycling jersey with the flame logo, padded cycling shorts,
+cycling shoes, and a sweatband on the forehead. NO helmet and NO sunglasses —
+this is indoors. A small towel hangs over one shoulder.
+```
+
+#### Pular corda — `caloricio-pularcorda.png`
+```
+Same character, same rules as before. New outfit: jump rope training.
+A sleeveless training tank with the flame logo, athletic shorts, and light
+training shoes. A jump rope held in both hands with the rope arcing over his
+head, the arc kept fully inside the frame and away from the other character.
+```
+
+#### Boxe — `caloricio-boxe.png`
+```
+Same character, same rules as before. New outfit: boxing training.
+Bare chest with a sleeveless boxing top, boxing trunks with a wide waistband
+and the flame logo, tall boxing boots, and large red boxing gloves worn on
+both hands, held up in a guard position close to the face.
+```
+
+#### Muay Thai / Kickboxing — `caloricio-muaythai.png`
+```
+Same character, same rules as before. New outfit: muay thai.
+Bare chest, muay thai shorts (short and wide, with the flame logo), a
+traditional mongkhon headband, ankle wraps, barefoot, and hand wraps on both
+hands held in a guard position.
+```
+
+#### Hidroginástica — `caloricio-hidroginastica.png`
+```
+Same character, same rules as before. New outfit: water aerobics.
+Swim trunks, a swim cap with the flame logo, and blue foam dumbbells (water
+weights) held one in each hand, close to the body. No goggles — his eyes must
+stay visible.
+```
+
+#### Surf — `caloricio-surf.png`
+```
+Same character, same rules as before. New outfit: surfing.
+A short-sleeve wetsuit top with the flame logo, board shorts, barefoot, and a
+surfboard standing upright on the ground beside him, leaning against his arm,
+fully inside the frame.
+```
+
+#### Dança / Zumba — `caloricio-danca.png`
+```
+Same character, same rules as before. New outfit: dance and zumba class.
+A colorful loose tank top with the flame logo, comfortable sweatpants, dance
+sneakers, and a sweatband on one wrist. Both hands empty and relaxed at his
+sides.
+```
+
+#### Vôlei — `caloricio-volei.png`
+```
+Same character, same rules as before. New outfit: volleyball.
+A sleeveless volleyball jersey with the flame logo, sport shorts, knee pads on
+both knees, and court shoes. A volleyball resting on the ground next to one
+foot, fully inside the frame.
+```
+
+#### Basquete — `caloricio-basquete.png`
+```
+Same character, same rules as before. New outfit: basketball.
+A basketball jersey with the flame logo, long basketball shorts, tall socks,
+and high-top basketball shoes. A basketball resting on the ground next to one
+foot, fully inside the frame.
+```
+
+#### Tênis — `caloricio-tenis.png`
+```
+Same character, same rules as before. New outfit: tennis.
+A white polo shirt with the flame logo, white tennis shorts, a visor cap with
+brown hair showing under it, wristbands, and tennis shoes. A tennis racket
+resting on the ground standing upright beside him, leaning against his leg.
+```
+
+#### Escalada — `caloricio-escalada.png`
+```
+Same character, same rules as before. New outfit: indoor climbing.
+A fitted t-shirt with the flame logo, climbing shorts, a climbing harness with
+straps around the waist and thighs, and climbing shoes. A chalk bag hanging at
+his waist. Both hands empty.
+```
+
+#### Funcional / Crossfit — `caloricio-crossfit.png`
+```
+Same character, same rules as before. New outfit: crossfit box training.
+A fitted compression t-shirt with the flame logo, training shorts, knee
+sleeves on both knees, a weightlifting belt, and flat training shoes. Both
+hands empty and relaxed at his sides — no equipment held.
+```
+
+**Nota:** a arte `funcional` atual segura uma corda de pular. Se você gerar a
+de Pular corda, faz sentido usar esta nova de Crossfit para a categoria e
+deixar a atual só para o exercício "Pular corda (moderado)".
+
 ## 4. Como salvar
 
 Salve cada imagem em `img/sources/` com exatamente estes nomes (o pipeline
@@ -176,6 +305,18 @@ depende deles):
 | Esportes | `img/sources/caloricio-esportes.png` |
 | Cardio | `img/sources/caloricio-cardio.png` |
 | Bem-estar | `img/sources/caloricio-bemestar.png` |
+| Spinning | `img/sources/caloricio-spinning.png` |
+| Pular corda | `img/sources/caloricio-pularcorda.png` |
+| Boxe | `img/sources/caloricio-boxe.png` |
+| Muay Thai | `img/sources/caloricio-muaythai.png` |
+| Hidroginástica | `img/sources/caloricio-hidroginastica.png` |
+| Surf | `img/sources/caloricio-surf.png` |
+| Dança / Zumba | `img/sources/caloricio-danca.png` |
+| Vôlei | `img/sources/caloricio-volei.png` |
+| Basquete | `img/sources/caloricio-basquete.png` |
+| Tênis | `img/sources/caloricio-tenis.png` |
+| Escalada | `img/sources/caloricio-escalada.png` |
+| Crossfit | `img/sources/caloricio-crossfit.png` |
 
 Não precisa mandar todas de uma vez — cada uma que chegar eu já processo.
 

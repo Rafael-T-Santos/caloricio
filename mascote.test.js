@@ -1,10 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { MET_TABLE } from './calc.js';
 import {
   TETOS_DURACAO,
   REGRAS,
   FANTASIAS,
+  FANTASIAS_POR_EXERCICIO,
   FANTASIA_GENERICA,
   DESCRICOES_VISUAL,
   VISUAIS_SEM_PISCADA,
@@ -103,6 +105,31 @@ test('desconfiado nunca pisca — os olhos já estão semicerrados', () => {
   assert.equal(e.desconfiado, true);
   assert.equal(e.imagemPiscando, null);
   assert.equal(podePiscar('corrida', true), false);
+});
+
+test('exercício com fantasia própria tem prioridade sobre a da categoria', () => {
+  const semOverride = estadoDoMascote('Lutas', 45, 'Jiu-jitsu / Luta');
+  assert.equal(semOverride.visual, FANTASIAS.Lutas);
+  // simula um override sem depender de arte que talvez ainda não exista
+  const fingido = { ...FANTASIAS_POR_EXERCICIO, 'Boxe (treino/sparring)': 'corrida' };
+  const visual = fingido['Boxe (treino/sparring)'] ?? FANTASIAS.Lutas;
+  assert.equal(visual, 'corrida');
+});
+
+test('todo override por exercício aponta para exercício e arte que existem', () => {
+  const nomes = new Set(MET_TABLE.map((i) => i.nome));
+  for (const [exercicio, visual] of Object.entries(FANTASIAS_POR_EXERCICIO)) {
+    assert.ok(nomes.has(exercicio), `exercício inexistente no override: ${exercicio}`);
+    assert.equal(typeof DESCRICOES_VISUAL[visual], 'string', `visual sem descrição: ${visual}`);
+    for (const desconfiado of [false, true]) {
+      const caminho = caminhoImagem(visual, desconfiado);
+      assert.ok(fs.existsSync(caminho), `arquivo faltando: ${caminho}`);
+    }
+    if (podePiscar(visual, false)) {
+      const blink = caminhoImagem(visual, false, true);
+      assert.ok(fs.existsSync(blink), `quadro de piscada faltando: ${blink}`);
+    }
+  }
 });
 
 test('estado normal aponta para o quadro de piscada correspondente', () => {

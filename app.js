@@ -17,7 +17,7 @@ const seletor = criarSeletorExercicio({
   grupos: agruparPorCategoria(),
   aoEscolher: (item) => {
     seletor.marcarErro(false);
-    aplicarMascote(estadoDoMascote(item.categoria, duracaoAtual()));
+    aplicarMascote(estadoDoMascote(item.categoria, duracaoAtual(), item.nome));
   },
 });
 
@@ -64,7 +64,7 @@ function mostrarErros(erros) {
 document.getElementById('duracao').addEventListener('input', () => {
   const item = exercicioSelecionado();
   if (!item) return;
-  aplicarMascote(estadoDoMascote(item.categoria, duracaoAtual()));
+  aplicarMascote(estadoDoMascote(item.categoria, duracaoAtual(), item.nome));
 });
 
 form.addEventListener('submit', (e) => {
@@ -103,7 +103,7 @@ form.addEventListener('submit', (e) => {
   kcalEl.textContent = String(Math.round(gasto)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   detalheEl.textContent = `${item.nome} por ${duracaoMin} min · TMB ${Math.round(bmr)} kcal/dia`;
 
-  aplicarMascote(estadoDoMascote(item.categoria, duracaoMin));
+  aplicarMascote(estadoDoMascote(item.categoria, duracaoMin, item.nome));
 
   // reveal com transição: hidden → visível no próximo frame
   resultado.hidden = false;
