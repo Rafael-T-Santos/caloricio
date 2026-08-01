@@ -41,31 +41,113 @@ body {
 /* ---------- Mascote ---------- */
 
 .mascote {
-  margin: 0 auto 20px;
-  width: 220px;
+  margin: 0 auto 16px;
+  width: 230px;
   text-align: center;
+}
+
+.mascote-palco {
+  position: relative;
+  /* espaço pra sombra viver abaixo dos pés sem empurrar o layout */
+  padding-bottom: 14px;
 }
 
 .mascote img {
   width: 100%;
   height: auto;
   display: block;
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-  padding: 10px;
 }
 
-/* pulinho ao trocar de estado (climax emocional do reveal) */
-@keyframes pulo {
-  0% { transform: translateY(0); }
-  35% { transform: translateY(-10px) rotate(-2deg); }
-  70% { transform: translateY(0) rotate(1deg); }
-  100% { transform: translateY(0); }
+/* --- Vida em repouso ---
+   Períodos propositalmente diferentes (3s x 3,7s) pra respiração e flutuação
+   saírem de fase e o movimento não ficar mecânico. */
+@keyframes flutuar {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-4px) rotate(-0.7deg); }
+  50% { transform: translateY(-7px) rotate(0deg); }
+  75% { transform: translateY(-4px) rotate(0.7deg); }
 }
 
-.mascote.reagindo img {
-  animation: pulo 0.45s ease;
+@keyframes respirar {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(0.985, 1.018); }
+}
+
+@keyframes sombra-viva {
+  0%, 100% { transform: scaleX(1); opacity: 0.17; }
+  50% { transform: scaleX(0.86); opacity: 0.1; }
+}
+
+.mascote-flutua {
+  animation: flutuar 3s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+
+/* Pulinho espontâneo em intervalo aleatório (app.js agenda): quebra a sensação
+   de loop mecânico, que é o que mais entrega "isso é só uma imagem girando". */
+@keyframes pulinho-idle {
+  0% { transform: translateY(0) scale(1, 1); }
+  18% { transform: translateY(0) scale(1.07, 0.93); }
+  45% { transform: translateY(-22px) scale(0.95, 1.06); }
+  70% { transform: translateY(0) scale(1.05, 0.95); }
+  85% { transform: translateY(-5px) scale(1, 1); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+
+.mascote-idle {
+  transform-origin: 50% 100%;
+}
+
+.mascote.pulando .mascote-idle {
+  animation: pulinho-idle 0.85s cubic-bezier(0.3, 1.2, 0.5, 1);
+}
+
+.mascote img {
+  transform-origin: 50% 100%;
+  animation: respirar 3.7s ease-in-out infinite;
+}
+
+.mascote-sombra {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 44%;
+  height: 12px;
+  margin-left: -22%;
+  border-radius: 50%;
+  background: #1f2937;
+  opacity: 0.17;
+  z-index: -1;
+  animation: sombra-viva 3s ease-in-out infinite;
+}
+
+/* --- Reação à troca de estado: agacha, salta e assenta --- */
+@keyframes reagir {
+  0% { transform: scale(1, 1) translateY(0); }
+  22% { transform: scale(1.1, 0.9) translateY(0); }
+  50% { transform: scale(0.93, 1.09) translateY(-13px); }
+  72% { transform: scale(1.04, 0.97) translateY(0); }
+  88% { transform: scale(0.99, 1.01) translateY(-2px); }
+  100% { transform: scale(1, 1) translateY(0); }
+}
+
+.mascote-reacao {
+  transform-origin: 50% 100%;
+}
+
+.mascote.reagindo .mascote-reacao {
+  animation: reagir 0.6s cubic-bezier(0.34, 1.3, 0.64, 1);
+}
+
+/* Quem pediu menos movimento no sistema não recebe nenhuma das animações. */
+@media (prefers-reduced-motion: reduce) {
+  .mascote-flutua,
+  .mascote img,
+  .mascote-sombra,
+  .mascote.reagindo .mascote-reacao,
+  .mascote.pulando .mascote-idle {
+    animation: none;
+  }
 }
 
 .legenda {

@@ -22,7 +22,22 @@
       (normal/desconfiado); categorias sem fantasia usam o visual genérico.
     -->
     <figure class="mascote" id="mascote" data-visual="neutro" data-desconfiado="false">
-      <img id="mascote-img" src="img/caloricio-gpt-normal.png" alt="Caloricio te esperando começar" width="360" height="502" />
+      <!--
+        Três camadas de transform aninhadas, cada uma com sua animação, porque
+        um mesmo elemento não consegue rodar transforms independentes:
+        reacao (squash on troca de estado) > flutua (sobe/desce) > img (respira).
+      -->
+      <div class="mascote-palco">
+        <div class="mascote-idle">
+          <div class="mascote-reacao">
+            <div class="mascote-flutua">
+              <img id="mascote-img" src="img/caloricio-gpt-normal.png"
+                   alt="Caloricio te esperando começar" width="520" height="620" />
+            </div>
+          </div>
+        </div>
+        <div class="mascote-sombra" aria-hidden="true"></div>
+      </div>
       <figcaption class="legenda" id="legenda" aria-live="polite"></figcaption>
     </figure>
 

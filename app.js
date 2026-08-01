@@ -38,17 +38,21 @@ function exercicioSelecionado() {
   return MET_TABLE.find((i) => i.nome === selectExercicio.value) ?? null;
 }
 
+let fimDaReacao = null;
+
 function aplicarMascote(estado) {
   const mudou = mascoteImg.getAttribute('src') !== estado.imagem;
   mascoteImg.src = estado.imagem;
   mascoteImg.alt = estado.descricao;
   legenda.textContent = estado.legenda;
-  if (mudou) {
-    mascote.classList.remove('reagindo');
-    // reinicia a animação de pulo mesmo em trocas consecutivas
-    void mascote.offsetWidth;
-    mascote.classList.add('reagindo');
-  }
+  if (!mudou) return;
+  mascote.classList.remove('reagindo', 'pulando');
+  // reinicia a animação mesmo em trocas consecutivas
+  void mascote.offsetWidth;
+  mascote.classList.add('reagindo');
+  // a classe precisa sair no fim, senão o pulinho espontâneo fica bloqueado
+  clearTimeout(fimDaReacao);
+  fimDaReacao = setTimeout(() => mascote.classList.remove('reagindo'), 650);
 }
 
 function mostrarErros(erros) {
@@ -124,5 +128,21 @@ form.addEventListener('submit', (e) => {
   });
 });
 
+// Pulinho espontâneo em intervalo irregular. Só roda com a aba visível e
+// respeita quem pediu menos movimento no sistema.
+const menosMovimento = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+function agendarPulinho() {
+  const espera = 6000 + Math.random() * 7000;
+  setTimeout(() => {
+    if (!document.hidden && !menosMovimento.matches && !mascote.classList.contains('reagindo')) {
+      mascote.classList.add('pulando');
+      setTimeout(() => mascote.classList.remove('pulando'), 900);
+    }
+    agendarPulinho();
+  }, espera);
+}
+
 montarDropdown();
 mascoteImg.alt = DESCRICOES_VISUAL.neutro;
+agendarPulinho();
