@@ -1,0 +1,216 @@
+:root {
+  --color-bg: #faf9f6;
+  --color-text: #1f2937;
+  --color-accent: #84cc16;
+  --color-accent-dark: #4d7c0f;
+  --color-erro: #dc2626;
+  --color-card: #ffffff;
+  --color-borda: #e5e7eb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Nunito', 'Trebuchet MS', sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+}
+
+.container {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+}
+
+.topo h1 {
+  font-size: 2.2rem;
+  font-weight: 900;
+  margin: 0;
+  color: var(--color-accent-dark);
+}
+
+.subtitulo {
+  margin: 4px 0 20px;
+  font-size: 1rem;
+}
+
+/* ---------- Mascote ---------- */
+
+.mascote {
+  margin: 0 auto 20px;
+  width: 200px;
+  text-align: center;
+}
+
+.mascote svg {
+  width: 100%;
+  height: auto;
+}
+
+/* troca de fantasia: só o grupo do visual ativo aparece */
+.fantasia {
+  display: none;
+}
+
+.mascote[data-visual='generica'] .fantasia-generica { display: block; }
+.mascote[data-visual='corrida'] .fantasia-corrida { display: block; }
+.mascote[data-visual='natacao'] .fantasia-natacao { display: block; }
+.mascote[data-visual='musculacao'] .fantasia-musculacao { display: block; }
+.mascote[data-visual='bike'] .fantasia-bike { display: block; }
+
+/* troca de rosto */
+.rosto-desconfiado { display: none; }
+.mascote[data-desconfiado='true'] .rosto-normal { display: none; }
+.mascote[data-desconfiado='true'] .rosto-desconfiado { display: block; }
+
+/* pulinho ao trocar de estado (climax emocional do reveal) */
+@keyframes pulo {
+  0% { transform: translateY(0); }
+  35% { transform: translateY(-10px) rotate(-2deg); }
+  70% { transform: translateY(0) rotate(1deg); }
+  100% { transform: translateY(0); }
+}
+
+.mascote.reagindo svg {
+  animation: pulo 0.45s ease;
+}
+
+.legenda {
+  min-height: 1.5em;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+/* ---------- Formulário ---------- */
+
+.campo {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+.linha {
+  display: flex;
+  gap: 10px;
+}
+
+.linha .campo {
+  flex: 1;
+}
+
+label {
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 4px;
+}
+
+input,
+select {
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--color-text);
+  background: var(--color-card);
+  border: 2px solid var(--color-borda);
+  border-radius: 10px;
+  padding: 10px 12px;
+  min-height: 44px; /* área mínima de toque */
+  width: 100%;
+}
+
+input:focus,
+select:focus {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: var(--color-accent-dark);
+}
+
+.campo.invalido input {
+  border-color: var(--color-erro);
+}
+
+.erro {
+  color: var(--color-erro);
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin: 4px 0 0;
+  min-height: 0;
+}
+
+.erro:empty {
+  display: none;
+}
+
+.calcular {
+  width: 100%;
+  min-height: 48px;
+  margin-top: 8px;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: #1a2e05;
+  background: var(--color-accent);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.calcular:hover {
+  background: #96dd2b;
+  transform: translateY(-1px);
+}
+
+.calcular:active {
+  transform: translateY(0);
+}
+
+/* ---------- Resultado ---------- */
+
+/* único card da tela — ganha o tratamento porque É a interação central */
+.resultado {
+  margin-top: 20px;
+  background: var(--color-card);
+  border: 2px solid var(--color-accent);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+  opacity: 0;
+  transform: scale(0.96);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.resultado.visivel {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.resultado-rotulo {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.resultado-valor {
+  margin: 4px 0;
+  font-size: 2.6rem;
+  font-weight: 900;
+  color: var(--color-accent-dark);
+  overflow-wrap: break-word;
+}
+
+.resultado-detalhe {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+.rodape {
+  margin-top: 28px;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-align: center;
+}

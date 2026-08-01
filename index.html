@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Caloricio — Calculadora de Calorias</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
+    <header class="topo">
+      <h1>Caloricio</h1>
+      <p class="subtitulo">Sua calculadora de calorias do desafio</p>
+    </header>
+
+    <!--
+      Mascote em SVG por camadas: um corpo base sempre visível + grupos de
+      fantasia (.fantasia) ligados/desligados por data-visual no <figure>,
+      + dois rostos alternáveis (normal / desconfiado) via data-desconfiado.
+    -->
+    <figure class="mascote" id="mascote" data-visual="neutro" data-desconfiado="false">
+      <svg viewBox="0 0 200 240" role="img" aria-labelledby="mascote-desc">
+        <desc id="mascote-desc">Caloricio te esperando começar</desc>
+
+        <!-- corpo base -->
+        <g id="base">
+          <ellipse cx="100" cy="228" rx="46" ry="8" fill="#00000012" />
+          <!-- pernas -->
+          <rect x="78" y="180" width="16" height="38" rx="8" fill="#F6A96C" />
+          <rect x="106" y="180" width="16" height="38" rx="8" fill="#F6A96C" />
+          <!-- tênis básicos -->
+          <g class="pes">
+            <ellipse cx="84" cy="221" rx="15" ry="8" fill="#4B5563" />
+            <ellipse cx="116" cy="221" rx="15" ry="8" fill="#4B5563" />
+          </g>
+          <!-- corpo redondinho -->
+          <ellipse cx="100" cy="140" rx="52" ry="50" fill="#FBBF77" />
+          <!-- braços -->
+          <rect class="braco-esq" x="38" y="120" width="16" height="44" rx="8" fill="#F6A96C" />
+          <rect class="braco-dir" x="146" y="120" width="16" height="44" rx="8" fill="#F6A96C" />
+          <!-- cabeça -->
+          <circle cx="100" cy="66" r="42" fill="#FBBF77" />
+        </g>
+
+        <!-- rosto normal -->
+        <g class="rosto rosto-normal">
+          <circle cx="86" cy="60" r="5" fill="#1F2937" />
+          <circle cx="114" cy="60" r="5" fill="#1F2937" />
+          <path d="M84 78 Q100 92 116 78" stroke="#1F2937" stroke-width="4" fill="none" stroke-linecap="round" />
+          <circle cx="76" cy="72" r="6" fill="#F98A8A" opacity="0.5" />
+          <circle cx="124" cy="72" r="6" fill="#F98A8A" opacity="0.5" />
+        </g>
+
+        <!-- rosto desconfiado: sobrancelha erguida, olhos apertados, boca reta -->
+        <g class="rosto rosto-desconfiado">
+          <path d="M78 48 L94 52" stroke="#1F2937" stroke-width="4" stroke-linecap="round" />
+          <path d="M106 44 L122 50" stroke="#1F2937" stroke-width="4" stroke-linecap="round" />
+          <path d="M80 62 L92 62" stroke="#1F2937" stroke-width="5" stroke-linecap="round" />
+          <circle cx="114" cy="61" r="5" fill="#1F2937" />
+          <path d="M88 82 L114 80" stroke="#1F2937" stroke-width="4" stroke-linecap="round" />
+        </g>
+
+        <!-- fantasia: genérica (faixa na cabeça) -->
+        <g class="fantasia fantasia-generica">
+          <rect x="60" y="38" width="80" height="12" rx="6" fill="#84CC16" />
+        </g>
+
+        <!-- fantasia: corrida (viseira, camiseta, tênis coloridos) -->
+        <g class="fantasia fantasia-corrida">
+          <path d="M58 46 Q100 26 142 46 L142 54 Q100 36 58 54 Z" fill="#EF4444" />
+          <rect x="56" y="112" width="88" height="40" rx="20" fill="#EF4444" />
+          <text x="100" y="140" text-anchor="middle" font-size="16" font-weight="bold" fill="#FFFFFF" font-family="sans-serif">42</text>
+          <ellipse cx="84" cy="221" rx="15" ry="8" fill="#84CC16" />
+          <ellipse cx="116" cy="221" rx="15" ry="8" fill="#84CC16" />
+        </g>
+
+        <!-- fantasia: natação (touca, óculos, sunga) -->
+        <g class="fantasia fantasia-natacao">
+          <path d="M58 60 Q58 22 100 22 Q142 22 142 60 Q100 44 58 60 Z" fill="#3B82F6" />
+          <circle cx="86" cy="60" r="10" fill="#BFDBFE" stroke="#1E40AF" stroke-width="3" />
+          <circle cx="114" cy="60" r="10" fill="#BFDBFE" stroke="#1E40AF" stroke-width="3" />
+          <path d="M96 60 L104 60" stroke="#1E40AF" stroke-width="3" />
+          <rect x="72" y="168" width="56" height="18" rx="9" fill="#1E40AF" />
+        </g>
+
+        <!-- fantasia: musculação (regata, halter na mão) -->
+        <g class="fantasia fantasia-musculacao">
+          <path d="M64 108 L136 108 L128 156 L72 156 Z" fill="#374151" />
+          <g transform="translate(154 118) rotate(20)">
+            <rect x="-4" y="0" width="8" height="34" rx="3" fill="#6B7280" />
+            <rect x="-12" y="-6" width="24" height="10" rx="4" fill="#1F2937" />
+            <rect x="-12" y="30" width="24" height="10" rx="4" fill="#1F2937" />
+          </g>
+        </g>
+
+        <!-- fantasia: bike (capacete) -->
+        <g class="fantasia fantasia-bike">
+          <path d="M56 56 Q56 20 100 20 Q144 20 144 56 L136 56 Q136 30 100 30 Q64 30 64 56 Z" fill="#F59E0B" />
+          <path d="M64 52 Q100 34 136 52" stroke="#B45309" stroke-width="4" fill="none" />
+          <rect x="94" y="20" width="12" height="8" rx="3" fill="#B45309" />
+        </g>
+      </svg>
+      <figcaption class="legenda" id="legenda" aria-live="polite"></figcaption>
+    </figure>
+
+    <form id="form" novalidate>
+      <div class="campo">
+        <label for="sexo">Sexo</label>
+        <select id="sexo" name="sexo" required>
+          <option value="M">Masculino</option>
+          <option value="F">Feminino</option>
+        </select>
+      </div>
+
+      <div class="linha">
+        <div class="campo">
+          <label for="idade">Idade (anos)</label>
+          <input type="number" id="idade" name="idade" inputmode="numeric" required />
+          <p class="erro" id="erro-idade"></p>
+        </div>
+        <div class="campo">
+          <label for="altura">Altura (cm)</label>
+          <input type="number" id="altura" name="altura" inputmode="numeric" required />
+          <p class="erro" id="erro-altura"></p>
+        </div>
+        <div class="campo">
+          <label for="peso">Peso (kg)</label>
+          <input type="number" id="peso" name="peso" inputmode="decimal" step="0.1" required />
+          <p class="erro" id="erro-peso"></p>
+        </div>
+      </div>
+
+      <div class="campo">
+        <label for="exercicio">Exercício</label>
+        <select id="exercicio" name="exercicio" required>
+          <!-- opções geradas em app.js a partir da tabela MET (fonte única) -->
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="duracao">Duração da atividade (minutos)</label>
+        <input type="number" id="duracao" name="duracao" inputmode="numeric" required />
+        <p class="erro" id="erro-duracao"></p>
+      </div>
+
+      <button type="submit" class="calcular">Calcular calorias</button>
+    </form>
+
+    <!-- ausente até o primeiro cálculo válido; aparece com transição de reveal -->
+    <section class="resultado" id="resultado" hidden aria-live="polite">
+      <p class="resultado-rotulo">Você queimou aproximadamente</p>
+      <p class="resultado-valor"><span id="kcal">0</span> kcal</p>
+      <p class="resultado-detalhe" id="detalhe"></p>
+    </section>
+
+    <footer class="rodape">
+      <p>TMB pela fórmula de Mifflin-St Jeor · valores MET do Compendium of Physical Activities. Resultados são estimativas.</p>
+    </footer>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

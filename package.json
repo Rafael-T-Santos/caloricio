@@ -1,0 +1,9 @@
+{
+  "name": "caloricio",
+  "version": "1.0.0",
+  "description": "Calculadora de gasto calórico com o mascote Caloricio",
+  "type": "module",
+  "scripts": {
+    "test": "node --test"
+  }
+}
