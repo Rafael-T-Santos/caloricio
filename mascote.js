@@ -20,17 +20,25 @@ export const TETOS_DURACAO = {
   'Bem-estar': 240,
 };
 
-// Fantasias com arte pronta (ilustração gerada + recortada em img/). Categorias
-// fora deste mapa usam o visual genérico até a arte ficar pronta — adicionar
-// uma fantasia nova é só acrescentar uma linha aqui + os 2 arquivos de imagem
+// Fantasias com arte pronta (ilustração gerada + recortada em img/). As 10
+// categorias da tabela MET estão cobertas. Para uma categoria nova: acrescente
+// uma linha aqui, uma descrição em DESCRICOES_VISUAL, e os 2 arquivos de imagem
 // (normal/desconfiado) em img/.
 export const FANTASIAS = {
+  Caminhada: 'caminhada',
   Corrida: 'corrida',
+  Bike: 'bike',
   'Natação': 'natacao',
   'Musculação': 'musculacao',
-  Bike: 'bike',
+  'Funcional/HIIT': 'funcional',
+  Lutas: 'lutas',
+  Esportes: 'esportes',
+  Cardio: 'cardio',
+  'Bem-estar': 'bemestar',
 };
 
+// Rede de segurança: categoria sem fantasia mapeada cai aqui em vez de pedir
+// uma imagem que não existe. Também é o visual do estado inicial.
 export const FANTASIA_GENERICA = 'gpt';
 
 // Cada visual vira 2 arquivos de imagem: img/caloricio-<visual>-normal.png e
@@ -42,12 +50,20 @@ export function caminhoImagem(visual, desconfiado) {
 }
 
 // Descrições por visual, usadas como texto alternativo pra leitor de tela.
+// As chaves têm que bater com os valores de FANTASIAS (mais 'gpt' e 'neutro'),
+// senão o alt vira "undefined" pra quem usa leitor de tela.
 export const DESCRICOES_VISUAL = {
+  caminhada: 'Caloricio de boné e jaqueta corta-vento, pronto pra caminhar',
   corrida: 'Caloricio de roupa de corrida, óculos esportivos e tênis',
+  bike: 'Caloricio de capacete e roupa de ciclismo',
   natacao: 'Caloricio de óculos de natação, touca e sunga',
-  musculacao: 'Caloricio de regata segurando um halter',
-  bike: 'Caloricio de capacete de ciclista',
-  generica: 'Caloricio com faixa na cabeça, pronto pro treino',
+  musculacao: 'Caloricio de regata, cinto de levantamento e luvas, com um haltere',
+  funcional: 'Caloricio de camiseta de treino com uma corda de pular',
+  lutas: 'Caloricio de kimono com faixa preta e luvas de boxe',
+  esportes: 'Caloricio de uniforme de futebol com uma bola ao lado do pé',
+  cardio: 'Caloricio com toalha no pescoço e garrafinha de água',
+  bemestar: 'Caloricio com um tapete de yoga enrolado sob o braço',
+  gpt: 'Caloricio de faixa na cabeça e moletom, pronto pro treino',
   neutro: 'Caloricio te esperando começar',
 };
 

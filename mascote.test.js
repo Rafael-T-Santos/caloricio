@@ -1,10 +1,12 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import {
   TETOS_DURACAO,
   REGRAS,
   FANTASIAS,
   FANTASIA_GENERICA,
+  DESCRICOES_VISUAL,
   avaliarRegras,
   estadoDoMascote,
   caminhoImagem,
@@ -48,10 +50,34 @@ test('categoria com fantasia desenhada veste o visual certo', () => {
   assert.equal(e.desconfiado, false);
 });
 
-test('categoria sem fantasia desenhada cai no visual genérico', () => {
-  const e = estadoDoMascote('Lutas', 45);
+test('categoria desconhecida cai no visual genérico', () => {
+  const e = estadoDoMascote('Categoria Que Não Existe', 45);
   assert.equal(e.visual, FANTASIA_GENERICA);
   assert.equal(e.desconfiado, false);
+});
+
+test('toda categoria da tabela MET tem fantasia própria', () => {
+  for (const categoria of Object.keys(TETOS_DURACAO)) {
+    assert.ok(FANTASIAS[categoria], `categoria sem fantasia: ${categoria}`);
+  }
+});
+
+test('todo visual tem descrição — senão o alt vira "undefined"', () => {
+  const visuais = [...Object.values(FANTASIAS), FANTASIA_GENERICA, 'neutro'];
+  for (const v of visuais) {
+    assert.equal(typeof DESCRICOES_VISUAL[v], 'string', `visual sem descrição: ${v}`);
+    assert.ok(DESCRICOES_VISUAL[v].length > 0, `descrição vazia: ${v}`);
+  }
+});
+
+test('toda imagem referenciada existe no disco', () => {
+  const visuais = [...Object.values(FANTASIAS), FANTASIA_GENERICA];
+  for (const v of visuais) {
+    for (const desconfiado of [false, true]) {
+      const caminho = caminhoImagem(v, desconfiado);
+      assert.ok(fs.existsSync(caminho), `arquivo faltando: ${caminho}`);
+    }
+  }
 });
 
 test('duração absurda → desconfiado com legenda, mantendo a fantasia da categoria', () => {
@@ -80,5 +106,7 @@ test('estadoDoMascote inclui o caminho da imagem correspondente', () => {
   const e2 = estadoDoMascote('Corrida', 999);
   assert.equal(e2.imagem, 'img/caloricio-corrida-desconfiado.png');
   const e3 = estadoDoMascote('Lutas', 45);
-  assert.equal(e3.imagem, `img/caloricio-${FANTASIA_GENERICA}-normal.png`);
+  assert.equal(e3.imagem, 'img/caloricio-lutas-normal.png');
+  const e4 = estadoDoMascote('Categoria Que Não Existe', 45);
+  assert.equal(e4.imagem, `img/caloricio-${FANTASIA_GENERICA}-normal.png`);
 });
