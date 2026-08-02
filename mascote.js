@@ -50,6 +50,9 @@ export const FANTASIAS_POR_EXERCICIO = {
   // debaixo do braço — quem faz pilates percebe que está vestido de outra coisa.
   Pilates: 'pilates',
   'Spinning (bike indoor)': 'spinning',
+  // O elíptico fica no visual de Cardio: camiseta, toalha e garrafinha é
+  // literalmente o que se veste num elíptico. O remo tem gesto próprio.
+  'Remo (ergômetro) moderado': 'remo',
   'Pular corda (moderado)': 'pularcorda',
   'Boxe (treino/sparring)': 'boxe',
   'Muay Thai / Kickboxing': 'muaythai',
@@ -130,6 +133,7 @@ export const DESCRICOES_VISUAL = {
   cardio: 'Caloricio de camiseta esportiva e toalha no pescoço, com uma garrafinha de água ao lado',
   bemestar: 'Caloricio com um tapete de yoga enrolado sob o braço',
   pilates: 'Caloricio de roupa justa e meias antiderrapantes, com um anel de pilates na mão',
+  remo: 'Caloricio de macaquinho de remo e munhequeiras, com a alça do ergômetro no chão ao lado',
   gpt: 'Caloricio de faixa na cabeça e moletom, pronto pro treino',
   neutro: 'Caloricio te esperando começar',
 };

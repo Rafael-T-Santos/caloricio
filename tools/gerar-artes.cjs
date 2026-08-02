@@ -64,6 +64,7 @@ function processar(nome, avisos) {
     t.removeWhiteBackground(img);
     // passa o lado para o filtro saber de que borda vem o vizinho invadindo
     t.keepLargestComponent(img, { ladoInterno: lado });
+    t.seatDetachedObjects(img);
     img = t.trimTransparent(img, 0);
     return { estado, img, olhos: acharOlhos(img) };
   });

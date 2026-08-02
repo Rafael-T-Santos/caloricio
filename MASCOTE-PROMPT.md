@@ -253,36 +253,25 @@ crossed over the chest, closed by a black belt tied in a knot at the waist,
 matching white gi pants that end above the ankles, and bare feet.
 ```
 
-### Remo — 3ª tentativa: a corrente não pode passar abaixo dos pés
+### Remo — resolvido com a 1ª tentativa, sem gerar de novo
 
-**Situação:** a 1ª tentativa (alça solta no chão) era a certa — ela só foi
-recusada porque o pipeline apagava objeto solto, o que já está resolvido (2d). A
-2ª tentativa, com a alça encostando no corpo, embolou: saíram duas barras pretas
-cruzando as pernas e as mãos voltaram a segurar. **Voltamos para a 1ª**, que já
-está em `img/sources/caloricio-remo.png`.
+Foram três versões, e **a primeira era a boa**: alça e corrente soltas no chão,
+longe das mãos. Ela tinha sido recusada por um motivo que deixou de existir
+(o pipeline apagava objeto solto — ver 2d). As outras duas tentaram encostar o
+equipamento no corpo e pioraram: a 2ª saiu com duas barras pretas cruzando as
+pernas, a 3ª com a alça atravessando a perna e passando na frente do tênis. Nas
+duas as mãos voltaram a segurar, que era exatamente o que queríamos evitar.
 
-Falta pouco: nela a corrente se estende **abaixo da linha dos pés**, e aí o
-personagem precisa de 449px de canvas abaixo dos olhos, contra 435 disponíveis.
-São 14px — só o rabo da corrente. Peça de novo com essa única restrição a mais:
+O único defeito real da 1ª — a corrente descendo abaixo da sola — virou um passo
+do pipeline (`seatDetachedObjects`) em vez de mais um pedido: objeto solto
+desenhado abaixo dos pés é subido até a linha do chão. Isso resolve o estouro de
+canvas e também alinha o objeto com a sombra do site, que fica na linha dos pés.
+Nunca desce nada — objeto acima da linha (bola no ar, prancha encostada) é
+intencional.
 
-```
-Same character, same rules as before. New outfit: indoor rowing (ergometer).
-
-Both hands empty and relaxed at his sides — he does NOT hold the handle. Do not
-draw any bar crossing his fists or his legs. Exactly ONE handle in the image per
-character.
-
-Outfit worn on the body: a sleeveless rowing singlet (a snug one-piece athletic
-top) with the flame logo, short compression shorts, and a sweatband on one wrist.
-
-Equipment: the black handle of a rowing machine with a short chain, lying flat
-on the ground next to his foot, separate from his body and not touching it.
-
-CRITICAL FRAMING: the handle and the chain must sit ON THE SAME GROUND LINE as
-his feet. Nothing may extend below the level of the soles of his shoes — the
-lowest point of the whole drawing must be his shoes, not the chain. Keep the
-chain short and beside the shoe, never trailing down past it.
-```
+**Lição para os próximos pedidos:** peça o equipamento **solto no chão, ao lado
+do pé**. Encostar no corpo era uma exigência da limitação antiga e hoje só
+atrapalha, porque leva o modelo a desenhar a mão segurando.
 
 ### (histórico) Remo — 2ª tentativa: a alça no chão era apagada pelo pipeline
 
@@ -446,7 +435,7 @@ e 12 novos.
 | `natacao` | natação leve, moderada e vigorosa |
 | `musculacao` | musculação leve e moderada/vigorosa |
 | `esportes` | futebol recreativo e competitivo |
-| `cardio` | elíptico e remo (a arte própria do remo não vingou — ver 2c) |
+| `cardio` | elíptico (camiseta, toalha e garrafinha é o que se veste num elíptico) |
 | `lutas` | jiu-jitsu |
 | `funcional` | funcional e crossfit |
 | `bemestar` | yoga |

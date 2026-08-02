@@ -332,6 +332,73 @@ function keepLargestComponent(img, opts = {}) {
   return apagados;
 }
 
+// Assenta os objetos soltos na mesma linha de chão dos pés do personagem.
+//
+// A IA às vezes desenha o objeto mais embaixo que os pés — a corrente do remo
+// descia ~30px abaixo da sola. Dois problemas nisso: o desenho passa a precisar
+// de mais canvas do que todas as outras fantasias (a do remo estourava por
+// 14px), e no site a sombra elíptica fica na linha dos pés, então o objeto
+// apareceria pendurado abaixo do próprio chão.
+//
+// Sobe cada componente solto até a base dele coincidir com a base do
+// personagem. Nunca desce nada: objeto acima da linha dos pés (bola no ar,
+// prancha encostada) é intencional e fica onde está.
+//
+// Roda depois de keepLargestComponent, quando o que sobrou já é só personagem
+// e objeto de verdade.
+function seatDetachedObjects(img) {
+  const { width: w, height: h, data } = img;
+  const label = new Int32Array(w * h).fill(-1);
+  const comps = [];
+  for (let i = 0; i < w * h; i++) {
+    if (label[i] !== -1 || data[i * 4 + 3] <= 16) continue;
+    const id = comps.length;
+    const stack = [i];
+    label[i] = id;
+    let n = 0;
+    let maxY = -1;
+    while (stack.length) {
+      const p = stack.pop();
+      n++;
+      const x = p % w;
+      const y = (p / w) | 0;
+      if (y > maxY) maxY = y;
+      if (x > 0 && label[p - 1] === -1 && data[(p - 1) * 4 + 3] > 16) { label[p - 1] = id; stack.push(p - 1); }
+      if (x < w - 1 && label[p + 1] === -1 && data[(p + 1) * 4 + 3] > 16) { label[p + 1] = id; stack.push(p + 1); }
+      if (y > 0 && label[p - w] === -1 && data[(p - w) * 4 + 3] > 16) { label[p - w] = id; stack.push(p - w); }
+      if (y < h - 1 && label[p + w] === -1 && data[(p + w) * 4 + 3] > 16) { label[p + w] = id; stack.push(p + w); }
+    }
+    comps.push({ id, n, maxY });
+  }
+  if (comps.length < 2) return 0;
+  const personagem = comps.reduce((a, b) => (b.n > a.n ? b : a));
+  let movidos = 0;
+  for (const c of comps) {
+    const desce = c.maxY - personagem.maxY;
+    if (c === personagem || desce <= 0) continue;
+    // varre de cima pra baixo copiando o pixel de baixo: mover pra cima nunca
+    // sobrescreve um pixel do componente que ainda não foi lido
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const destino = y * w + x;
+        const origem = destino + desce * w;
+        if (label[destino] === c.id) {
+          data[destino * 4 + 3] = 0;
+          data[destino * 4] = data[destino * 4 + 1] = data[destino * 4 + 2] = 255;
+        }
+        if (origem < w * h && label[origem] === c.id) {
+          for (let k = 0; k < 4; k++) data[destino * 4 + k] = data[origem * 4 + k];
+          label[destino] = c.id;
+          data[origem * 4 + 3] = 0;
+          label[origem] = -1;
+        }
+      }
+    }
+    movidos++;
+  }
+  return movidos;
+}
+
 // Escala pela ALTURA (não largura) pra o personagem ter sempre o mesmo tamanho
 // entre fantasias, mesmo quando uma delas é mais larga (halteres da musculação).
 function resizeToHeight(img, targetH) {
@@ -417,6 +484,7 @@ function metade(img, lado) {
 module.exports = {
   decodePNG, encodePNG, removeWhiteBackground, trimTransparent,
   resize, resizeToHeight, padToCanvas, quantize, metade, keepLargestComponent,
+  seatDetachedObjects,
 };
 
 if (require.main === module) {
