@@ -46,6 +46,9 @@ export const FANTASIAS = {
 // Para adicionar: uma linha aqui, uma em DESCRICOES_VISUAL, e os arquivos
 // -normal/-desconfiado/-blink em img/. Os testes acusam se faltar qualquer um.
 export const FANTASIAS_POR_EXERCICIO = {
+  // Pilates saiu do visual de Bem-estar porque aquele é um tapete de yoga
+  // debaixo do braço — quem faz pilates percebe que está vestido de outra coisa.
+  Pilates: 'pilates',
   'Spinning (bike indoor)': 'spinning',
   'Pular corda (moderado)': 'pularcorda',
   'Boxe (treino/sparring)': 'boxe',
@@ -124,8 +127,9 @@ export const DESCRICOES_VISUAL = {
   escalada: 'Caloricio de cadeirinha de escalada com saquinho de magnésio',
   lutas: 'Caloricio de kimono com faixa preta e luvas de boxe',
   esportes: 'Caloricio de uniforme de futebol com uma bola ao lado do pé',
-  cardio: 'Caloricio com toalha no pescoço e garrafinha de água',
+  cardio: 'Caloricio de camiseta esportiva com uma toalha no pescoço',
   bemestar: 'Caloricio com um tapete de yoga enrolado sob o braço',
+  pilates: 'Caloricio de roupa justa e meias antiderrapantes, com um anel de pilates na mão',
   gpt: 'Caloricio de faixa na cabeça e moletom, pronto pro treino',
   neutro: 'Caloricio te esperando começar',
 };

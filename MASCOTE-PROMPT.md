@@ -189,6 +189,80 @@ separated from his body and fully inside the frame.
 
 ---
 
+## 2c. Resultado da rodada — 2 entraram, 2 precisam voltar
+
+**Cardio e Pilates entraram** e já estão no ar. **Jiu-jitsu e Remo voltaram**,
+cada um por um motivo diferente — e nenhum dos dois é culpa do desenho em si,
+que veio certo. Os prompts corrigidos estão abaixo.
+
+### Jiu-jitsu — precisa voltar: personagem fora de proporção
+
+As luvas de boxe sumiram, as mãos saíram livres, o kimono e a faixa ficaram
+certos. O problema é outro: **o personagem foi desenhado mais comprido**. O
+pipeline ancora pela distância entre os olhos justamente para o mascote ter
+sempre o mesmo tamanho em todas as fantasias, e nessa arte o corpo abaixo dos
+olhos mede 487px na escala padrão, contra no máximo 417px de todas as outras 20
+artes. Não cabe no canvas: os pés saem cortados nos joelhos.
+
+Encolher só essa arte para caber resolveria o corte, mas aí o mascote mudaria
+de tamanho ao escolher jiu-jitsu, que é exatamente o que a ancoragem por olhos
+existe para impedir. Por isso o certo é regerar.
+
+```
+Same character, same rules as before. New outfit: Brazilian jiu-jitsu.
+
+PROPORTIONS ARE CRITICAL — the last attempt drew the body too long. Keep the
+exact chibi proportions of the attached reference image: the head must be very
+large relative to the body, roughly one third of the total height, with short
+stubby legs. Do not lengthen the legs or the torso to fit the gi. Compare with
+the reference before finishing: total height should be about 3 head-heights.
+
+NO boxing gloves, NO MMA gloves, NO hand wraps. Both hands completely bare with
+individual fingers visible, empty and relaxed at his sides.
+
+Outfit worn on the body: a thick white jiu-jitsu gi jacket with a wide lapel
+crossed over the chest, closed by a black belt tied in a knot at the waist,
+matching white gi pants that end above the ankles, and bare feet.
+```
+
+### Remo — precisa voltar: a alça no chão é apagada pelo pipeline
+
+O desenho veio exatamente como pedi: alça preta com corrente, no chão, longe
+das mãos. O problema é que **objeto solto no chão não sobrevive ao pipeline**.
+Para separar os dois personagens da mesma imagem, o processamento descarta
+fragmentos que vazaram do vizinho, e faz isso apagando tudo que não está ligado
+ao corpo. A alça é um componente separado, então ela some — e sem a alça sobra
+um macaquinho vermelho, que lê como luta olímpica, não como remo.
+
+É o mesmo motivo pelo qual a bola do basquete, a do vôlei e a do futebol também
+não aparecem nas artes atuais, apesar de estarem nos originais.
+
+A saída é a que já funciona na raquete de tênis e na prancha de surf: o objeto
+**encosta no personagem**, virando uma peça só com ele.
+
+```
+Same character, same rules as before. New outfit: indoor rowing (ergometer).
+
+He must NOT hold the rowing handle in his hands — both hands stay empty and
+relaxed at his sides. A straight bar drawn across two closed fists is the
+mistake to avoid.
+
+CRITICAL: the equipment must physically TOUCH his body, not float separately on
+the ground. An object that does not touch him gets removed in processing.
+
+Outfit worn on the body: a sleeveless rowing singlet (a snug one-piece athletic
+top) with the flame logo, short compression shorts, and a sweatband on one
+wrist.
+
+Equipment: the black handle of a rowing machine standing upright on the ground
+and LEANING AGAINST HIS LEG, touching his calf, with a short length of chain
+resting on the ground beside his foot and also touching his shoe. The handle
+and the chain must overlap his body silhouette so they read as one piece with
+him.
+```
+
+---
+
 ## 3. Prompt por categoria
 
 Cada bloco abaixo é uma mensagem separada. Sempre comece com
@@ -313,7 +387,7 @@ e 12 novos.
 | `natacao` | natação leve, moderada e vigorosa |
 | `musculacao` | musculação leve e moderada/vigorosa |
 | `esportes` | futebol recreativo e competitivo |
-| `cardio` | elíptico (o remo saiu para arte própria — ver seção 2b) |
+| `cardio` | elíptico e remo (a arte própria do remo não vingou — ver 2c) |
 | `lutas` | jiu-jitsu |
 | `funcional` | funcional e crossfit |
 | `bemestar` | yoga |

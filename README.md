@@ -100,10 +100,19 @@ mesma origem gera o mesmo arquivo.
 O site serve WebP (~70% menor que o PNG, visualmente idêntico nesta arte
 chapada) e mantém o PNG como fallback; `app.js` detecta o suporte e escolhe.
 
-Não existe encoder WebP em Node puro, então a conversão passa pelo canvas do
-navegador. Depois de gerar arte nova, rode o servidor local com o endpoint de
-gravação e converta pelo navegador — os testes acusam se algum arquivo existir
-só num dos dois formatos.
+Não existe encoder WebP em Node puro, então a conversão passa pelo canvas de um
+navegador — mas isso não é mais um passo manual: o Chromium do Playwright, que
+já está instalado para os testes de DOM, faz sozinho.
+
+```bash
+node tools/gerar-webp.cjs cardio pilates   # os 3 estados de cada
+node tools/gerar-webp.cjs --todos          # tudo que estiver em img/
+```
+
+É o mesmo encoder e a mesma qualidade (0.82) do passo manual antigo: rodar o
+script sobre uma arte que não mudou devolve um arquivo byte a byte idêntico ao
+que já está no repositório. Os testes acusam se algum arquivo existir só num dos
+dois formatos.
 
 ### Quadro de piscada
 
