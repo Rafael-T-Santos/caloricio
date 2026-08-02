@@ -23,7 +23,6 @@ const SHELL = [
   './seletor.js',
   './preferencias.js',
   './cartao.js',
-  './temas.css',
   './manifest.webmanifest',
 ];
 

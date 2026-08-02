@@ -1,6 +1,6 @@
-/* Tema padrão. Os alternativos ficam em temas.css e só entram quando a página
-   é aberta com ?tema=<nome> — serve pra comparar direções visuais no app real
-   em vez de em maquete. Sem o parâmetro, nada muda. */
+/* Cores, raios e espessuras num lugar só. Estavam fixos espalhados pelo
+   arquivo; centralizar permitiu comparar direções visuais no app real e deixa
+   qualquer ajuste futuro de identidade num ponto único. */
 :root {
   --color-bg: #faf9f6;
   --color-text: #1f2937;
