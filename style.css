@@ -1,11 +1,29 @@
+/* Tema padrão. Os alternativos ficam em temas.css e só entram quando a página
+   é aberta com ?tema=<nome> — serve pra comparar direções visuais no app real
+   em vez de em maquete. Sem o parâmetro, nada muda. */
 :root {
   --color-bg: #faf9f6;
   --color-text: #1f2937;
+  --color-suave: #6b7280;   /* texto secundário */
+  --color-fraco: #9ca3af;   /* texto terciário, data */
   --color-accent: #84cc16;
+  --color-accent-claro: #96dd2b;
   --color-accent-dark: #4d7c0f;
+  --color-sobre-accent: #1a2e05; /* texto em cima do acento */
   --color-erro: #dc2626;
   --color-card: #ffffff;
   --color-borda: #e5e7eb;
+  --color-hover: #f3f4f6;
+  --color-selecionado: #f2fbe6;
+  --color-sombra-mascote: #1f2937;
+  --veu: rgba(31, 41, 55, 0.45);
+
+  --raio-campo: 10px;
+  --raio-cartao: 20px;
+  --raio-item: 12px;
+  --sombra-painel: 0 -8px 30px rgba(0, 0, 0, 0.18);
+  --peso-titulo: 900;
+  --borda-campo: 2px;
 }
 
 * {
@@ -55,14 +73,14 @@ body {
    resultado, o mascote daria um salto de 3px pro lado no momento do cálculo. */
 .cartao {
   border: 3px solid transparent;
-  border-radius: 20px;
+  border-radius: var(--raio-cartao);
   padding: 10px 10px 4px;
   transition: border-color 0.3s ease, background-color 0.3s ease;
 }
 
 .cartao.com-resultado {
   border-color: var(--color-accent);
-  background: #ffffff;
+  background: var(--color-card);
 }
 
 .acoes {
@@ -79,12 +97,12 @@ body {
   color: var(--color-accent-dark);
   background: var(--color-card);
   border: 2px solid var(--color-accent);
-  border-radius: 12px;
+  border-radius: var(--raio-item);
   cursor: pointer;
 }
 
 .compartilhar:hover {
-  background: #f2fbe6;
+  background: var(--color-selecionado);
 }
 
 .compartilhar:focus-visible {
@@ -100,7 +118,7 @@ body {
 .acoes-aviso {
   margin: 6px 0 0;
   font-size: 0.8rem;
-  color: #6b7280;
+  color: var(--color-suave);
   min-height: 1em;
 }
 
@@ -188,7 +206,7 @@ body {
   height: 13px;
   margin-left: -21%;
   border-radius: 50%;
-  background: #1f2937;
+  background: var(--color-sombra-mascote);
   opacity: 0.17;
   z-index: -1;
   animation: sombra-viva 3s ease-in-out infinite;
@@ -259,8 +277,8 @@ select {
   font-size: 1rem;
   color: var(--color-text);
   background: var(--color-card);
-  border: 2px solid var(--color-borda);
-  border-radius: 10px;
+  border: var(--borda-campo) solid var(--color-borda);
+  border-radius: var(--raio-campo);
   padding: 10px 12px;
   min-height: 44px; /* área mínima de toque */
   width: 100%;
@@ -307,10 +325,10 @@ select:focus {
   font-family: inherit;
   font-size: 1rem;
   text-align: left;
-  color: #6b7280;
+  color: var(--color-suave);
   background: var(--color-card);
-  border: 2px solid var(--color-borda);
-  border-radius: 10px;
+  border: var(--borda-campo) solid var(--color-borda);
+  border-radius: var(--raio-campo);
   cursor: pointer;
 }
 
@@ -343,7 +361,7 @@ select:focus {
 .seletor-fundo {
   position: fixed;
   inset: 0;
-  background: rgba(31, 41, 55, 0.45);
+  background: var(--veu);
   opacity: 0;
   transition: opacity 0.2s ease;
   z-index: 10;
@@ -381,7 +399,7 @@ select:focus {
   max-height: 82vh;
   background: var(--color-card);
   border-radius: 20px 20px 0 0;
-  box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.18);
+  box-shadow: var(--sombra-painel);
   transform: translateY(100%);
   transition: transform 0.22s cubic-bezier(0.2, 0.8, 0.3, 1);
 }
@@ -422,7 +440,7 @@ select:focus {
 }
 
 .seletor-icone-botao:hover {
-  background: #f3f4f6;
+  background: var(--color-hover);
 }
 
 .seletor-icone-botao:focus-visible {
@@ -450,12 +468,12 @@ select:focus {
   gap: 12px;
   min-height: 56px;
   padding: 8px 10px;
-  border-radius: 12px;
+  border-radius: var(--raio-item);
   cursor: pointer;
 }
 
 .seletor-item:hover {
-  background: #f3f4f6;
+  background: var(--color-hover);
 }
 
 .seletor-item:focus-visible {
@@ -464,7 +482,7 @@ select:focus {
 }
 
 .seletor-item.ativo {
-  background: #f2fbe6;
+  background: var(--color-selecionado);
 }
 
 .seletor-icone {
@@ -488,11 +506,11 @@ select:focus {
 
 .seletor-sub {
   font-size: 0.8rem;
-  color: #6b7280;
+  color: var(--color-suave);
 }
 
 .seletor-avanca {
-  color: #9ca3af;
+  color: var(--color-fraco);
   font-size: 1.3rem;
   flex: none;
 }
@@ -542,16 +560,16 @@ body.sem-rolagem {
   font-family: inherit;
   font-size: 1.1rem;
   font-weight: 900;
-  color: #1a2e05;
+  color: var(--color-sobre-accent);
   background: var(--color-accent);
   border: none;
-  border-radius: 12px;
+  border-radius: var(--raio-item);
   cursor: pointer;
   transition: transform 0.15s ease, background 0.15s ease;
 }
 
 .calcular:hover {
-  background: #96dd2b;
+  background: var(--color-accent-claro);
   transform: translateY(-1px);
 }
 
@@ -562,7 +580,7 @@ body.sem-rolagem {
 .lembrete {
   margin: 10px 0 0;
   font-size: 0.78rem;
-  color: #9ca3af;
+  color: var(--color-fraco);
   text-align: center;
 }
 
@@ -616,13 +634,13 @@ body.sem-rolagem {
 .resultado-detalhe {
   margin: 0;
   font-size: 0.85rem;
-  color: #6b7280;
+  color: var(--color-suave);
 }
 
 .rodape {
   margin-top: 28px;
   font-size: 0.75rem;
-  color: #9ca3af;
+  color: var(--color-fraco);
   text-align: center;
 }
 
@@ -630,5 +648,5 @@ body.sem-rolagem {
   margin: 6px 0 0;
   font-size: 0.78rem;
   font-weight: 700;
-  color: #9ca3af;
+  color: var(--color-fraco);
 }

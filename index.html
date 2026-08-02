@@ -8,6 +8,17 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="style.css" />
+  <!-- Temas alternativos só para comparar direções visuais (?tema=<nome>).
+       Sai do projeto quando uma direção for escolhida. -->
+  <link rel="stylesheet" href="temas.css" />
+  <script>
+    // Inline e antes do corpo de propósito: se o tema fosse aplicado só depois
+    // do app.js carregar, a página piscaria no tema padrão antes de trocar.
+    (function () {
+      var t = new URLSearchParams(location.search).get('tema');
+      if (t && /^[a-z]+$/.test(t)) document.documentElement.dataset.tema = t;
+    })();
+  </script>
   <link rel="manifest" href="manifest.webmanifest" />
   <meta name="theme-color" content="#84cc16" />
   <link rel="apple-touch-icon" href="img/icone-192.png" />
