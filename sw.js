@@ -22,6 +22,7 @@ const SHELL = [
   './mascote.js',
   './seletor.js',
   './preferencias.js',
+  './cartao.js',
   './manifest.webmanifest',
 ];
 

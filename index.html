@@ -24,6 +24,12 @@
       caminhoImagem). Cada categoria com fantasia pronta tem 2 arquivos
       (normal/desconfiado); categorias sem fantasia usam o visual genérico.
     -->
+    <!--
+      Mascote e resultado ficam dentro do mesmo card porque é essa composição
+      que vira a imagem exportada. A borda só aparece depois de calcular, mas
+      já ocupa espaço desde o início (transparente) pra não deslocar o layout.
+    -->
+    <div class="cartao" id="cartao">
     <figure class="mascote" id="mascote" data-visual="neutro" data-desconfiado="false">
       <!--
         Três camadas de transform aninhadas, cada uma com sua animação, porque
@@ -50,6 +56,22 @@
       </div>
       <figcaption class="legenda" id="legenda" aria-live="polite"></figcaption>
     </figure>
+
+      <!-- ausente até o primeiro cálculo válido; aparece com transição de reveal -->
+      <section class="resultado" id="resultado" hidden aria-live="polite">
+        <p class="resultado-rotulo">Você queimou aproximadamente</p>
+        <p class="resultado-valor"><span id="kcal">0</span> kcal</p>
+        <p class="resultado-detalhe" id="detalhe"></p>
+        <p class="resultado-data" id="data-registro"></p>
+      </section>
+    </div>
+
+    <div class="acoes" id="acoes" hidden>
+      <button type="button" class="compartilhar" id="compartilhar">
+        Compartilhar imagem
+      </button>
+      <p class="acoes-aviso" id="acoes-aviso" role="status"></p>
+    </div>
 
     <form id="form" novalidate>
       <div class="campo">
@@ -106,13 +128,6 @@
         <button type="button" class="link" id="esquecer">Esquecer</button>
       </p>
     </form>
-
-    <!-- ausente até o primeiro cálculo válido; aparece com transição de reveal -->
-    <section class="resultado" id="resultado" hidden aria-live="polite">
-      <p class="resultado-rotulo">Você queimou aproximadamente</p>
-      <p class="resultado-valor"><span id="kcal">0</span> kcal</p>
-      <p class="resultado-detalhe" id="detalhe"></p>
-    </section>
 
     <footer class="rodape">
       <p>TMB pela fórmula de Mifflin-St Jeor · valores MET do Compendium of Physical Activities. Resultados são estimativas.</p>

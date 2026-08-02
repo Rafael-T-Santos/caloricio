@@ -4,6 +4,7 @@ import { computeBMR, computeGasto, validarCampos, agruparPorCategoria } from './
 import { estadoDoMascote, DESCRICOES_VISUAL, definirFormatoImagem } from './mascote.js';
 import { criarSeletorExercicio } from './seletor.js';
 import { criarPreferencias, CAMPOS } from './preferencias.js';
+import { compartilharCartao } from './cartao.js';
 
 const form = document.getElementById('form');
 const mascote = document.getElementById('mascote');
@@ -12,6 +13,12 @@ const legenda = document.getElementById('legenda');
 const resultado = document.getElementById('resultado');
 const kcalEl = document.getElementById('kcal');
 const detalheEl = document.getElementById('detalhe');
+const dataEl = document.getElementById('data-registro');
+const cartao = document.getElementById('cartao');
+const acoes = document.getElementById('acoes');
+
+// Guarda o último resultado válido para a exportação em imagem.
+let ultimoCalculo = null;
 
 // O seletor é alimentado pela mesma tabela MET do cálculo (fonte única).
 const seletor = criarSeletorExercicio({
@@ -89,6 +96,9 @@ form.addEventListener('submit', (e) => {
     // não deixa um resultado antigo visível junto de um formulário inválido
     resultado.hidden = true;
     resultado.classList.remove('visivel');
+    cartao.classList.remove('com-resultado');
+    acoes.hidden = true;
+    ultimoCalculo = null;
     return;
   }
 
@@ -106,16 +116,36 @@ form.addEventListener('submit', (e) => {
   guardarDados();
 
   kcalEl.textContent = String(Math.round(gasto)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
-  detalheEl.textContent = `${item.nome} por ${duracaoMin} min · TMB ${Math.round(bmr)} kcal/dia`;
+  detalheEl.textContent = `${item.nome} · ${duracaoMin} min`;
+  const data = new Date().toLocaleDateString('pt-BR', {
+    day: '2-digit',
+    month: '2-digit',
+    year: 'numeric',
+  });
+  dataEl.textContent = data;
 
   aplicarMascote(estadoDoMascote(item.categoria, duracaoMin, item.nome));
 
+  ultimoCalculo = {
+    kcal: kcalEl.textContent,
+    exercicio: item.nome,
+    duracaoMin,
+    data,
+    imagem: estadoDoMascote(item.categoria, duracaoMin, item.nome).imagem,
+  };
+
   // reveal com transição: hidden → visível no próximo frame
   resultado.hidden = false;
+  cartao.classList.add('com-resultado');
+  acoes.hidden = false;
   resultado.classList.remove('visivel');
   requestAnimationFrame(() => {
     requestAnimationFrame(() => resultado.classList.add('visivel'));
   });
+
+  // O card fica acima do botão que a pessoa acabou de tocar. Sem rolar até
+  // ele, no celular parece que o clique não fez nada.
+  cartao.scrollIntoView({ behavior: menosMovimento.matches ? 'auto' : 'smooth', block: 'center' });
 });
 
 // Pulinho espontâneo em intervalo irregular. Só roda com a aba visível e
@@ -203,6 +233,29 @@ function guardarDados() {
   const dados = Object.fromEntries(CAMPOS.map((c) => [c, document.getElementById(c).value]));
   if (preferencias.salvar(dados)) lembrete.hidden = false;
 }
+
+// --- Exportar o resultado como imagem ---
+const botaoCompartilhar = document.getElementById('compartilhar');
+const avisoAcoes = document.getElementById('acoes-aviso');
+
+botaoCompartilhar.addEventListener('click', async () => {
+  if (!ultimoCalculo) return;
+  botaoCompartilhar.disabled = true;
+  const textoOriginal = botaoCompartilhar.textContent;
+  botaoCompartilhar.textContent = 'Gerando imagem…';
+  avisoAcoes.textContent = '';
+  try {
+    const como = await compartilharCartao(ultimoCalculo);
+    if (como === 'baixado') avisoAcoes.textContent = 'Imagem salva nos seus downloads.';
+    else if (como === 'cancelado') avisoAcoes.textContent = '';
+    else avisoAcoes.textContent = 'Pronto!';
+  } catch {
+    avisoAcoes.textContent = 'Não consegui gerar a imagem. Tente de novo.';
+  } finally {
+    botaoCompartilhar.disabled = false;
+    botaoCompartilhar.textContent = textoOriginal;
+  }
+});
 
 document.getElementById('esquecer').addEventListener('click', () => {
   preferencias.limpar();

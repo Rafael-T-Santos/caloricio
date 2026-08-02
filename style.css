@@ -49,6 +49,61 @@ body {
   font-size: 1rem;
 }
 
+/* ---------- Card exportável (mascote + resultado) ---------- */
+
+/* A borda já existe transparente desde o começo: se ela nascesse junto com o
+   resultado, o mascote daria um salto de 3px pro lado no momento do cálculo. */
+.cartao {
+  border: 3px solid transparent;
+  border-radius: 20px;
+  padding: 10px 10px 4px;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
+}
+
+.cartao.com-resultado {
+  border-color: var(--color-accent);
+  background: #ffffff;
+}
+
+.acoes {
+  margin: 12px 0 20px;
+  text-align: center;
+}
+
+.compartilhar {
+  width: 100%;
+  min-height: 46px;
+  font-family: inherit;
+  font-size: 1rem;
+  font-weight: 900;
+  color: var(--color-accent-dark);
+  background: var(--color-card);
+  border: 2px solid var(--color-accent);
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.compartilhar:hover {
+  background: #f2fbe6;
+}
+
+.compartilhar:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.compartilhar[disabled] {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.acoes-aviso {
+  margin: 6px 0 0;
+  font-size: 0.8rem;
+  color: #6b7280;
+  min-height: 1em;
+}
+
 /* ---------- Mascote ---------- */
 
 .mascote {
@@ -530,13 +585,10 @@ body.sem-rolagem {
 
 /* ---------- Resultado ---------- */
 
-/* único card da tela — ganha o tratamento porque É a interação central */
+/* Sem borda e sem fundo próprios: quem faz esse papel agora é o .cartao que
+   envolve mascote e resultado, já que é essa composição que vira imagem. */
 .resultado {
-  margin-top: 20px;
-  background: var(--color-card);
-  border: 2px solid var(--color-accent);
-  border-radius: 16px;
-  padding: 20px;
+  padding: 4px 12px 14px;
   text-align: center;
   opacity: 0;
   transform: scale(0.96);
@@ -572,4 +624,11 @@ body.sem-rolagem {
   font-size: 0.75rem;
   color: #9ca3af;
   text-align: center;
+}
+
+.resultado-data {
+  margin: 6px 0 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #9ca3af;
 }

@@ -43,11 +43,22 @@ e o motor de regras do mascote.
 | `seletor.js` | Seletor de exercício em dois níveis (categoria → exercício). |
 | `app.js` | Única camada que toca o DOM. |
 | `preferencias.js` | Guarda os dados pessoais entre visitas. |
+| `cartao.js` | Desenha o resultado como imagem pra compartilhar. |
 | `sw.js` | Service worker: faz o app abrir e calcular sem rede. |
 | `tools/` | Pipeline de arte (só roda na máquina, não vai pro navegador). |
 
 O seletor é próprio em vez de `<select>` porque o picker nativo do Android
 achata os `<optgroup>` e a hierarquia categoria → exercício se perde.
+
+## Exportando o resultado
+
+Depois de calcular, o mascote e o resultado ficam dentro de um card com borda, e
+o botão "Compartilhar imagem" gera essa composição em PNG 1080x1350.
+
+O desenho é feito direto no canvas, sem biblioteca de captura de DOM: o card é
+simples e desenhar à mão é determinístico, sem os problemas de fonte e CORS que
+essas bibliotecas têm. No celular usa `navigator.share` com arquivo, que entrega
+direto no outro app; onde isso não existe, baixa o arquivo.
 
 ## Processando arte nova
 
