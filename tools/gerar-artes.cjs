@@ -147,6 +147,7 @@ if (require.main === module) {
 
 module.exports = { processar, DISTANCIA_OLHOS_ALVO, OLHOS_Y_ALVO, CANVAS_W, CANVAS_H };
 
-// NOTA: depois de gerar/regerar arte, converta para WebP.
-// Não há encoder WebP em Node puro nem binário local; a conversão é feita pelo
-// canvas do navegador. Ver "Convertendo para WebP" no README.
+// NOTA: depois de gerar/regerar arte, rode `node tools/gerar-webp.cjs <nome>`.
+// Não há encoder WebP em Node puro nem binário local, então a conversão passa
+// pelo canvas de um navegador — o script usa o Chromium do Playwright para
+// isso. Os testes acusam se um visual existir só num dos dois formatos.

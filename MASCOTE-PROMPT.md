@@ -58,18 +58,48 @@ Depois disso, mande **um pedido por mensagem**, sempre na mesma conversa.
 
 ---
 
-## 2b. Rodada atual — 4 imagens
+## 2a. Onde colocar o equipamento — regra de ouro
 
-Auditoria de agosto/2026: todos os 38 exercícios têm arte e não falta nenhum
-arquivo em disco. O que apareceu foram **duas artes erradas** e **dois
-exercícios vestidos com a roupa de outro**. É só isso que precisa desta rodada.
+Tudo que deu errado em arte deste projeto caiu numa destas duas armadilhas.
+Vale reler antes de escrever qualquer pedido novo.
+
+**1. Mão segurando objeto rígido dá errado.** É o erro mais teimoso do modelo:
+a barra do haltere saiu por cima do punho fechado, a garrafinha atravessou o
+pulso, o cabo do remo cruzou a perna. Os dedos quase nunca envolvem o objeto de
+verdade.
+
+**2. Objeto encostado no corpo também dá errado**, e por tabela. Pedir contato
+empurra o modelo justamente para a pose de segurar — foi o que estragou a 2ª e a
+3ª tentativa do remo.
+
+Então a ordem de preferência é:
+
+| Preferência | Como pedir | Exemplos que funcionaram |
+|---|---|---|
+| 1º — **vestido** | o equipamento é roupa: calçado, amarrado, pendurado | luvas de boxe, cinto, capacete, touca, meia antiderrapante, toalha no pescoço |
+| 2º — **solto no chão** | ao lado do pé, sem encostar em nada | bola de futebol, vôlei, basquete, haltere, garrafinha, alça do remo |
+| 3º — **na mão** | só quando o gesto É o exercício | corda de pular girando por cima da cabeça |
+
+Objeto solto no chão **sobrevive ao pipeline** desde a mudança descrita em 2d, e
+se estiver desenhado abaixo da linha dos pés ele é subido automaticamente. Não
+precisa mais pedir contato com o corpo — aquilo era contorno de uma limitação
+que não existe mais.
+
+---
+
+## 2b. Rodada de agosto/2026 — as 4 imagens (concluída)
+
+Auditoria: todos os 38 exercícios tinham arte e não faltava nenhum arquivo em
+disco. O que apareceu foram **duas artes erradas** e **dois exercícios vestidos
+com a roupa de outro**. Os quatro prompts abaixo são os que geraram a arte que
+está no ar hoje — servem de modelo para pedidos novos.
 
 | # | Arte | Por quê |
 |---|---|---|
-| 1 | `lutas` (REFAZER) | o jiu-jitsu está de luvas de boxe |
-| 2 | `cardio` (REFAZER) | duas garrafinhas, uma em cada mão, com o encaixe errado |
-| 3 | `pilates` (NOVA) | hoje o Pilates aparece vestido de yoga |
-| 4 | `remo` (NOVA) | hoje o Remo usa o genérico de academia |
+| 1 | `lutas` (refeita) | o jiu-jitsu estava de luvas de boxe |
+| 2 | `cardio` (refeita) | duas garrafinhas, uma em cada mão, com o encaixe errado |
+| 3 | `pilates` (nova) | o Pilates aparecia vestido de yoga |
+| 4 | `remo` (nova) | o Remo usava o genérico de academia |
 
 O **Elíptico continua no `cardio`** de propósito: camiseta, toalha no pescoço e
 garrafinha é literalmente o que se veste num elíptico, então arte separada não
@@ -217,13 +247,13 @@ antes gerar um original novo sem marca d'água.
 
 ---
 
-## 2c. Resultado da rodada — 2 entraram, 2 precisam voltar
+## 2c. Resultado da rodada — as 4 entraram
 
-**Cardio e Pilates entraram** e já estão no ar. **Jiu-jitsu e Remo voltaram**,
-cada um por um motivo diferente — e nenhum dos dois é culpa do desenho em si,
-que veio certo. Os prompts corrigidos estão abaixo.
+Cardio, Pilates, Jiu-jitsu e Remo estão no ar. As duas últimas precisaram de
+mais de uma geração, e o registro de por quê está abaixo: em nenhum dos casos o
+desenho em si estava feio, o que travou foi proporção e pipeline.
 
-### Jiu-jitsu — precisa voltar: personagem fora de proporção
+### Jiu-jitsu — resolvido na 2ª geração: personagem estava fora de proporção
 
 As luvas de boxe sumiram, as mãos saíram livres, o kimono e a faixa ficaram
 certos. O problema é outro: **o personagem foi desenhado mais comprido**. O
@@ -285,29 +315,10 @@ um macaquinho vermelho, que lê como luta olímpica, não como remo.
 É o mesmo motivo pelo qual a bola do basquete, a do vôlei e a do futebol também
 não aparecem nas artes atuais, apesar de estarem nos originais.
 
-A saída é a que já funciona na raquete de tênis e na prancha de surf: o objeto
-**encosta no personagem**, virando uma peça só com ele.
-
-```
-Same character, same rules as before. New outfit: indoor rowing (ergometer).
-
-He must NOT hold the rowing handle in his hands — both hands stay empty and
-relaxed at his sides. A straight bar drawn across two closed fists is the
-mistake to avoid.
-
-CRITICAL: the equipment must physically TOUCH his body, not float separately on
-the ground. An object that does not touch him gets removed in processing.
-
-Outfit worn on the body: a sleeveless rowing singlet (a snug one-piece athletic
-top) with the flame logo, short compression shorts, and a sweatband on one
-wrist.
-
-Equipment: the black handle of a rowing machine standing upright on the ground
-and LEANING AGAINST HIS LEG, touching his calf, with a short length of chain
-resting on the ground beside his foot and also touching his shoe. The handle
-and the chain must overlap his body silhouette so they read as one piece with
-him.
-```
+A saída **na época** foi pedir que o objeto encostasse no personagem, virando uma
+peça só com ele. Deu errado duas vezes seguidas, e o prompt correspondente foi
+removido deste documento de propósito, para ninguém copiá-lo: ele mandava o
+equipamento tocar o corpo, que é hoje exatamente o oposto da regra de ouro (2a).
 
 ---
 
@@ -344,20 +355,9 @@ clearly separated from his body, fully inside the frame. The dumbbell rests on
 the floor and is not connected to the character in any way.
 ```
 
-**Se ainda assim não gostar**, tente esta variante — mantém o haltere na mão,
-mas descreve a pegada explicitamente em vez de deixar o modelo improvisar:
-
-```
-Same character, same rules as before. New outfit: weightlifting.
-Sleeveless gym stringer tank top with the flame logo, athletic shorts, and
-training shoes.
-
-He holds ONE dumbbell in his right hand, arm hanging straight down at his side.
-Draw the grip correctly: his fingers curl AROUND the dumbbell bar and close
-over the front of it, the thumb wraps from the other side, and the bar is
-hidden behind the fingers where it passes through the hand. The bar must never
-be drawn on top of or across the closed fist. The left hand is empty.
-```
+Havia aqui uma variante que mantinha o haltere na mão e descrevia a pegada em
+detalhe. Foi removida: descrever a pegada não resolve, o modelo erra do mesmo
+jeito, e a versão com o haltere no chão ficou boa. Ver a regra de ouro em 2a.
 
 ### Caminhada
 
@@ -368,23 +368,19 @@ walking sneakers, and a baseball cap worn forward with brown hair showing
 under it.
 ```
 
-### Funcional / HIIT
+### Funcional / HIIT — obsoleto
 
-```
-Same character, same rules as before. New outfit: functional / HIIT training.
-A fitted short-sleeve compression shirt with the flame logo, training shorts,
-knee sleeves, and a jump rope held in one hand with the rope hanging in a
-small loop close to the body.
-```
+Este prompt pedia uma corda de pular na mão e gerou o visual `funcional`, que
+**não é mais usado por nenhum exercício**: a categoria Funcional/HIIT usa o
+visual de Crossfit (mãos livres, em 3b) e a corda ficou exclusiva do exercício
+"Pular corda". Não gere por este bloco.
 
-### Lutas
+### Lutas — obsoleto, ver 2c
 
-```
-Same character, same rules as before. New outfit: martial arts.
-A white karate/jiu-jitsu gi jacket with a black belt tied at the waist, gi
-pants, barefoot, and red boxing gloves on both hands held up near the chest
-in a guard position.
-```
+O prompt daqui pedia luvas de boxe por cima do kimono. Fazia sentido quando
+`lutas` vestia as três lutas, mas Boxe e Muay Thai ganharam arte própria e
+`lutas` passou a ser só o jiu-jitsu — onde a mão precisa agarrar o kimono e luva
+nenhuma cabe. **Use o prompt de jiu-jitsu da seção 2c.**
 
 ### Esportes
 
@@ -399,19 +395,31 @@ inside the frame.
 
 ```
 Same character, same rules as before. New outfit: gym cardio session.
-A breathable sport t-shirt with the flame logo, running shorts, training
-shoes, a small white towel draped around the neck, and a water bottle held
-in one hand close to the body.
+
+Both hands empty and relaxed at his sides — nothing held, nothing touching or
+crossing the hands.
+
+Outfit worn on the body: a breathable short-sleeve sport t-shirt with the flame
+logo, running shorts, training shoes, and a small white towel draped around the
+neck with both ends hanging down over the chest.
+
+Equipment: exactly ONE water bottle standing upright on the ground next to his
+foot, separate from his body and fully inside the frame.
 ```
 
-### Bem-estar
+### Bem-estar (yoga)
+
+O tapete enrolado debaixo do braço é uma exceção aceita à regra de ouro: não é
+pegada de dedos em objeto rígido, é volume apoiado no braço, e sempre saiu bem.
 
 ```
-Same character, same rules as before. New outfit: yoga and pilates.
+Same character, same rules as before. New outfit: yoga.
 A comfortable loose tank top with the flame logo, soft stretchy leggings,
 barefoot, and a rolled-up yoga mat carried under one arm, kept close to the
 body and fully inside the frame.
 ```
+
+O Pilates saiu desta fantasia e tem prompt próprio na seção 2b.
 
 ---
 
@@ -422,8 +430,7 @@ tem exatamente a mesma roupa e muda só a intensidade. As quatro faixas de
 Corrida (8, 10, 12 e 14 km/h) usam o mesmo uniforme; desenhar quatro seria
 gerar a mesma imagem quatro vezes.
 
-Contando só o que é visualmente distinto, dá **21 visuais** — 10 que já existem
-e 12 novos.
+Contando só o que é visualmente distinto, são **22 visuais**, todos já gerados.
 
 ### Exercícios que continuam usando a fantasia da categoria
 
@@ -437,10 +444,13 @@ e 12 novos.
 | `esportes` | futebol recreativo e competitivo |
 | `cardio` | elíptico (camiseta, toalha e garrafinha é o que se veste num elíptico) |
 | `lutas` | jiu-jitsu |
-| `funcional` | funcional e crossfit |
+| `crossfit` | funcional e crossfit |
 | `bemestar` | yoga |
 
-### Os 12 que merecem arte própria
+### Os exercícios com arte própria
+
+Estes 12 vieram desta rodada; Pilates e Remo entraram depois e têm os prompts
+deles na seção 2b.
 
 Mesmo fluxo: mesma conversa, prompt-base já enviado, um pedido por mensagem.
 
@@ -453,6 +463,10 @@ this is indoors. A small towel hangs over one shoulder.
 ```
 
 #### Pular corda — `caloricio-pularcorda.png`
+
+Exceção deliberada à regra de ouro: aqui o gesto de segurar **é** o exercício, e
+a corda é flexível, não uma barra rígida atravessando o punho. Saiu bem.
+
 ```
 Same character, same rules as before. New outfit: jump rope training.
 A sleeveless training tank with the flame logo, athletic shorts, and light
@@ -479,17 +493,28 @@ hands held in a guard position.
 #### Hidroginástica — `caloricio-hidroginastica.png`
 ```
 Same character, same rules as before. New outfit: water aerobics.
-Swim trunks, a swim cap with the flame logo, and blue foam dumbbells (water
-weights) held one in each hand, close to the body. No goggles — his eyes must
-stay visible.
+
+Both hands empty and relaxed at his sides — nothing held.
+
+Outfit worn on the body: swim trunks and a swim cap with the flame logo. No
+goggles — his eyes must stay visible.
+
+Equipment: two blue foam dumbbells (water weights) resting on the ground next to
+his feet, separate from his body and fully inside the frame.
 ```
 
 #### Surf — `caloricio-surf.png`
 ```
 Same character, same rules as before. New outfit: surfing.
-A short-sleeve wetsuit top with the flame logo, board shorts, barefoot, and a
-surfboard standing upright on the ground beside him, leaning against his arm,
-fully inside the frame.
+
+Both hands empty and relaxed at his sides.
+
+Outfit worn on the body: a short-sleeve wetsuit top with the flame logo, board
+shorts, barefoot.
+
+Equipment: a surfboard standing upright on the ground beside him, NOT touching
+him and not overlapping his body, with a clear gap between the board and his
+arm. Keep the whole board inside the frame and away from the other character.
 ```
 
 #### Dança / Zumba — `caloricio-danca.png`
@@ -519,9 +544,15 @@ foot, fully inside the frame.
 #### Tênis — `caloricio-tenis.png`
 ```
 Same character, same rules as before. New outfit: tennis.
-A white polo shirt with the flame logo, white tennis shorts, a visor cap with
-brown hair showing under it, wristbands, and tennis shoes. A tennis racket
-resting on the ground standing upright beside him, leaning against his leg.
+
+Both hands empty and relaxed at his sides — he does NOT hold the racket.
+
+Outfit worn on the body: a white polo shirt with the flame logo, white tennis
+shorts, a visor cap with brown hair showing under it, wristbands, and tennis
+shoes.
+
+Equipment: a tennis racket lying flat on the ground next to his foot, separate
+from his body and fully inside the frame.
 ```
 
 #### Escalada — `caloricio-escalada.png`
@@ -540,9 +571,9 @@ sleeves on both knees, a weightlifting belt, and flat training shoes. Both
 hands empty and relaxed at his sides — no equipment held.
 ```
 
-**Nota:** a arte `funcional` atual segura uma corda de pular. Se você gerar a
-de Pular corda, faz sentido usar esta nova de Crossfit para a categoria e
-deixar a atual só para o exercício "Pular corda (moderado)".
+**Nota:** foi assim que a categoria Funcional/HIIT passou a usar este visual de
+mãos livres, e a corda de pular ficou exclusiva do exercício "Pular corda
+(moderado)". O visual `funcional` antigo deixou de ser usado.
 
 ## 4. Como salvar
 
@@ -603,5 +634,7 @@ Checagens automáticas que eu faço em cada arte nova:
   alinhamento entre as fantasias, já que a troca é feita por substituição da
   imagem inteira.
 - **Fundo branco liso**: é o que o pipeline usa para recortar o personagem.
-- **Equipamento junto ao corpo**: acessório esticado para o lado é exatamente
-  o que fez os halteres da musculação serem cortados na emenda.
+- **Equipamento compacto, perto do pé**: não precisa (nem deve) encostar no
+  corpo — ver a regra de ouro em 2a —, mas também não pode se esticar para o
+  lado. Acessório espalhado é o que fez os halteres da musculação serem cortados
+  na emenda entre os dois personagens.
