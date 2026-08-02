@@ -58,6 +58,137 @@ Depois disso, mande **um pedido por mensagem**, sempre na mesma conversa.
 
 ---
 
+## 2b. Rodada atual — 4 imagens
+
+Auditoria de agosto/2026: todos os 38 exercícios têm arte e não falta nenhum
+arquivo em disco. O que apareceu foram **duas artes erradas** e **dois
+exercícios vestidos com a roupa de outro**. É só isso que precisa desta rodada.
+
+| # | Arte | Por quê |
+|---|---|---|
+| 1 | `lutas` (REFAZER) | o jiu-jitsu está de luvas de boxe |
+| 2 | `cardio` (REFAZER) | duas garrafinhas, uma em cada mão, com o encaixe errado |
+| 3 | `pilates` (NOVA) | hoje o Pilates aparece vestido de yoga |
+| 4 | `remo` (NOVA) | hoje o Remo usa o genérico de academia |
+
+O **Elíptico continua no `cardio`** de propósito: camiseta, toalha no pescoço e
+garrafinha é literalmente o que se veste num elíptico, então arte separada não
+acrescentaria nada. É o único da lista que resolvi não desdobrar.
+
+### 1. Jiu-jitsu — `caloricio-lutas.png` (substitui a atual)
+
+**O problema:** a arte atual tem kimono, faixa preta **e luvas de boxe**. Ela
+foi feita quando `lutas` era a fantasia compartilhada das três lutas, e as
+luvas eram um meio-termo aceitável. Depois que Boxe e Muay Thai ganharam arte
+própria, `lutas` passou a vestir só o jiu-jitsu — e aí o meio-termo virou erro:
+no jiu-jitsu as mãos agarram o kimono, com luva de boxe não dá pra lutar.
+
+```
+Same character, same rules as before. New outfit: Brazilian jiu-jitsu.
+
+IMPORTANT: absolutely NO boxing gloves, NO MMA gloves and NO hand wraps. Both
+hands must be completely bare with individual fingers visible. Jiu-jitsu is a
+grappling sport — the hands grip the fabric of the gi, so any glove is wrong.
+The previous version of this outfit had red boxing gloves; remove them
+entirely.
+
+Outfit worn on the body: a thick white jiu-jitsu gi jacket with a wide lapel
+crossed over the chest, closed by a black belt tied in a knot at the waist,
+matching loose white gi pants, and bare feet.
+
+Hands: both hands empty and relaxed, hanging down at his sides, fingers
+visible. No object of any kind in either hand.
+```
+
+**Variante**, se ficar parado demais — a pegada é em tecido, que é mais
+tolerante que barra rígida, mas ainda assim é uma mão segurando algo:
+
+```
+Same as above, but one hand grips his own gi lapel at chest height, with the
+fingers clearly curled around the thick fabric and the thumb closing over it.
+The other hand stays empty at his side. Still no gloves of any kind.
+```
+
+### 2. Cardio — `caloricio-cardio.png` (substitui a atual)
+
+**O problema:** a arte atual tem **uma garrafinha em cada mão** (a descrição
+sempre disse uma só), e nas duas o objeto atravessa o punho em vez de ser
+segurado. É a armadilha conhecida do objeto agarrado. A saída é a mesma que
+resolveu a musculação: mão vazia, equipamento no chão.
+
+```
+Same character, same rules as before. New outfit: gym cardio session.
+
+IMPORTANT: the character must NOT hold anything in his hands. Both hands are
+empty and relaxed, hanging down at his sides in loose fists, exactly like the
+hands in the original reference image. The previous version drew a water bottle
+in EACH hand, with the bottles crossing over the wrists instead of being held —
+do not draw any object touching, crossing or overlapping the hands.
+
+Outfit worn on the body: a breathable short-sleeve sport t-shirt with the flame
+logo, running shorts, training shoes, and a small white towel draped around the
+neck with both ends hanging down over the chest.
+
+Equipment: exactly ONE water bottle, standing upright on the ground next to his
+right foot, clearly separated from his body and fully inside the frame. Only
+one bottle in the whole image per character.
+```
+
+### 3. Pilates — `caloricio-pilates.png` (nova)
+
+**Por quê:** hoje Pilates e Yoga dividem a fantasia `bemestar`, que é um tapete
+de yoga enrolado debaixo do braço. Quem faz pilates percebe na hora que está
+vestido de outra coisa. O sinal mais forte e mais seguro de desenhar é a meia
+antiderrapante: é **calçada**, não segurada.
+
+```
+Same character, same rules as before. New outfit: pilates.
+
+This must read clearly as pilates and NOT as yoga — no yoga mat anywhere in the
+image. Both hands empty and relaxed at his sides, no object in the hands.
+
+Outfit worn on the body: a fitted long-sleeve athletic top with the flame logo,
+snug cropped leggings, and grippy pilates socks on both feet — ankle-height
+socks with small visible rubber dots on the sole.
+
+Equipment: ONE pilates ring (a "magic circle": a flexible ring about the size of
+his torso, with two padded grips on opposite sides) standing upright on the
+ground beside him, leaning lightly against his leg, fully inside the frame.
+```
+
+**Se o anel sair deformado**, troque a última frase por esta — bola é bem mais
+fácil de desenhar, e as meias sozinhas já identificam o pilates:
+
+```
+Equipment: ONE small soft exercise ball resting on the ground next to his foot,
+fully inside the frame. No ring.
+```
+
+### 4. Remo (ergômetro) — `caloricio-remo.png` (nova)
+
+**Por quê:** o remo é o movimento mais característico da categoria Cardio e
+hoje não tem nada que o identifique. O cuidado aqui é não pedir a alça do
+ergômetro na mão: alça é uma **barra reta atravessando os dois punhos fechados**,
+exatamente o desenho que deu errado no haltere da musculação.
+
+```
+Same character, same rules as before. New outfit: indoor rowing (ergometer).
+
+IMPORTANT: he must NOT hold the rowing handle. Both hands are empty and relaxed
+at his sides. A straight bar drawn across two closed fists is exactly the
+mistake to avoid — no handle, no bar, no rope in the hands.
+
+Outfit worn on the body: a sleeveless rowing singlet (a snug one-piece athletic
+top) with the flame logo, short compression shorts, and a sweatband on one
+wrist.
+
+Equipment: the black handle of a rowing machine, with a short length of chain
+still attached to it, lying flat on the ground next to his foot, clearly
+separated from his body and fully inside the frame.
+```
+
+---
+
 ## 3. Prompt por categoria
 
 Cada bloco abaixo é uma mensagem separada. Sempre comece com
@@ -182,7 +313,7 @@ e 12 novos.
 | `natacao` | natação leve, moderada e vigorosa |
 | `musculacao` | musculação leve e moderada/vigorosa |
 | `esportes` | futebol recreativo e competitivo |
-| `cardio` | elíptico e remo (os dois são máquina, a roupa é a mesma) |
+| `cardio` | elíptico (o remo saiu para arte própria — ver seção 2b) |
 | `lutas` | jiu-jitsu |
 | `funcional` | funcional e crossfit |
 | `bemestar` | yoga |
@@ -303,8 +434,10 @@ depende deles):
 | Funcional/HIIT | `img/sources/caloricio-funcional.png` |
 | Lutas | `img/sources/caloricio-lutas.png` |
 | Esportes | `img/sources/caloricio-esportes.png` |
-| Cardio | `img/sources/caloricio-cardio.png` |
+| Cardio | `img/sources/caloricio-cardio.png` (substitui a atual) |
 | Bem-estar | `img/sources/caloricio-bemestar.png` |
+| Pilates | `img/sources/caloricio-pilates.png` |
+| Remo (ergômetro) | `img/sources/caloricio-remo.png` |
 | Spinning | `img/sources/caloricio-spinning.png` |
 | Pular corda | `img/sources/caloricio-pularcorda.png` |
 | Boxe | `img/sources/caloricio-boxe.png` |
@@ -334,6 +467,9 @@ Checagens automáticas que eu faço em cada arte nova:
 - conteúdo não pode encostar na borda do canvas (detecta corte)
 - cor do cabelo comparada com a referência (detecta a troca para preto)
 - tamanho do personagem consistente com as outras fantasias
+- inspeção ampliada das mãos com `node tools/zoom.cjs <arte> 5 60 100 92`, que
+  é onde o defeito costuma estar e onde ele não aparece no tamanho de exibição
+  — foi assim que apareceram as duas garrafinhas do cardio
 
 ---
 
