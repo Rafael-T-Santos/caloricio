@@ -27,12 +27,33 @@ python -m http.server 8000
 
 ## Testes
 
+São dois conjuntos separados. O de lógica não precisa de nada instalado:
+
 ```bash
-node --test
+npm test
 ```
 
 Cobre a fórmula (validada contra a planilha de referência), a validação de faixa
-e o motor de regras do mascote.
+e o motor de regras do mascote — tudo módulo puro, sem DOM e sem rede.
+
+O de navegador cobre o que só existe na tela: o seletor de dois níveis, a
+validação por campo, os atalhos de duração, o fallback de arte e a exportação da
+imagem. Ele sobe um servidor estático próprio e não depende da internet.
+
+```bash
+npm i           # baixa o Playwright (devDependency)
+npx playwright install chromium
+npm run test:e2e
+```
+
+O arquivo é `e2e.spec.js`, e não `.test.js`, de propósito: `node --test` não
+descobre esse padrão, então `npm test` continua rodando sozinho em qualquer
+máquina, sem exigir navegador.
+
+Um dos testes existe por causa de um bug que chegou a produção — o painel do
+seletor continuava engolindo cliques depois de fechado, porque `display: flex`
+vence o atributo `hidden`. É layout calculado, então só um navegador de verdade
+percebe.
 
 ## Estrutura
 
