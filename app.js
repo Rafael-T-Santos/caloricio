@@ -3,6 +3,7 @@
 import { computeBMR, computeGasto, validarCampos, agruparPorCategoria } from './calc.js';
 import { estadoDoMascote, DESCRICOES_VISUAL } from './mascote.js';
 import { criarSeletorExercicio } from './seletor.js';
+import { criarPreferencias, CAMPOS } from './preferencias.js';
 
 const form = document.getElementById('form');
 const mascote = document.getElementById('mascote');
@@ -100,6 +101,10 @@ form.addEventListener('submit', (e) => {
   const duracaoMin = Number(valores.duracao);
   const gasto = computeGasto(bmr, item.met, duracaoMin);
 
+  // Grava só depois de um cálculo válido: assim o que fica salvo é sempre um
+  // conjunto que passou na validação, não rascunho de digitação.
+  guardarDados();
+
   kcalEl.textContent = String(Math.round(gasto)).replace(/\B(?=(\d{3})+(?!\d))/g, '.');
   detalheEl.textContent = `${item.nome} por ${duracaoMin} min · TMB ${Math.round(bmr)} kcal/dia`;
 
@@ -169,8 +174,50 @@ function agendarPulinho() {
   }, espera);
 }
 
+// --- Dados pessoais entre visitas ---
+// localStorage pode simplesmente não existir (contexto sem permissão), por isso
+// o acesso vai dentro de try.
+const preferencias = criarPreferencias(
+  (() => {
+    try {
+      return window.localStorage;
+    } catch {
+      return { getItem: () => null, setItem: () => {}, removeItem: () => {} };
+    }
+  })()
+);
+
+const lembrete = document.getElementById('lembrete');
+
+function restaurarDados() {
+  const dados = preferencias.carregar();
+  if (!dados) return;
+  for (const campo of CAMPOS) {
+    if (dados[campo] !== undefined) document.getElementById(campo).value = dados[campo];
+  }
+  lembrete.hidden = false;
+}
+
+function guardarDados() {
+  if (!preferencias.disponivel) return;
+  const dados = Object.fromEntries(CAMPOS.map((c) => [c, document.getElementById(c).value]));
+  if (preferencias.salvar(dados)) lembrete.hidden = false;
+}
+
+document.getElementById('esquecer').addEventListener('click', () => {
+  preferencias.limpar();
+  for (const campo of CAMPOS) {
+    const el = document.getElementById(campo);
+    if (campo === 'sexo') el.selectedIndex = 0;
+    else el.value = '';
+  }
+  lembrete.hidden = true;
+  document.getElementById('idade').focus();
+});
+
 // Estado inicial: a arte genérica, mas com a descrição de "ainda não escolheu"
 // em vez da descrição da fantasia genérica.
 aplicarMascote({ ...estadoDoMascote(null, null), descricao: DESCRICOES_VISUAL.neutro });
+restaurarDados();
 agendarPulinho();
 agendarPiscada();

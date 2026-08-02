@@ -64,8 +64,6 @@ body {
 
 .mascote-palco {
   position: relative;
-  /* espaço pra sombra viver abaixo dos pés sem empurrar o layout */
-  padding-bottom: 14px;
 }
 
 .mascote img {
@@ -123,13 +121,17 @@ body {
   animation: respirar 3.7s ease-in-out infinite;
 }
 
+/* Ancorada na linha dos pés (medida em ~97% da altura da arte em todas as
+   fantasias), não na base da caixa. Em porcentagem para acompanhar o tamanho
+   de exibição. Fica fora dos wrappers animados de propósito: o chão não sobe
+   junto quando o mascote pula. */
 .mascote-sombra {
   position: absolute;
   left: 50%;
-  bottom: 6px;
-  width: 44%;
-  height: 12px;
-  margin-left: -22%;
+  top: 95%;
+  width: 42%;
+  height: 13px;
+  margin-left: -21%;
   border-radius: 50%;
   background: #1f2937;
   opacity: 0.17;
@@ -500,6 +502,30 @@ body.sem-rolagem {
 
 .calcular:active {
   transform: translateY(0);
+}
+
+.lembrete {
+  margin: 10px 0 0;
+  font-size: 0.78rem;
+  color: #9ca3af;
+  text-align: center;
+}
+
+.link {
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 700;
+  color: var(--color-accent-dark);
+  background: none;
+  border: none;
+  padding: 4px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--color-accent);
+  border-radius: 4px;
 }
 
 /* ---------- Resultado ---------- */
