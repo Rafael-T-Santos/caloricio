@@ -62,7 +62,8 @@ function processar(nome, avisos) {
   const metades = LADOS.map(([lado, estado]) => {
     let img = t.metade(src, lado);
     t.removeWhiteBackground(img);
-    t.keepLargestComponent(img);
+    // passa o lado para o filtro saber de que borda vem o vizinho invadindo
+    t.keepLargestComponent(img, { ladoInterno: lado });
     img = t.trimTransparent(img, 0);
     return { estado, img, olhos: acharOlhos(img) };
   });

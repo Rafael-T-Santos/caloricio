@@ -189,6 +189,34 @@ separated from his body and fully inside the frame.
 
 ---
 
+## 2d. Objetos soltos agora sobrevivem
+
+O pipeline apagava tudo que não estivesse ligado ao corpo do personagem, para
+descartar pedaços do vizinho que vazam na hora de cortar a imagem ao meio. Isso
+levava junto os objetos que o desenho quis: a garrafinha do cardio e a bola do
+vôlei nunca chegaram ao site.
+
+O corte agora é **1% do tamanho do personagem**, e o número saiu de medir os
+componentes das 50 metades de todas as artes: os objetos de verdade são 3,6%
+(garrafinha), 5,2% (alça do remo) e 7,3% (bola do vôlei), enquanto o maior lixo
+é um risco de 96px, 0,012%. Entre 0,012% e 3,6% não existe nada — 1% cai no meio
+do vazio. Além disso, componente que encosta na linha onde a imagem foi cortada
+ao meio sai fora independente do tamanho: aquilo é o vizinho invadindo, e é a
+única coisa que o tamanho sozinho não distingue de um objeto legítimo.
+
+**Consequência para os prompts:** objeto no chão voltou a ser a melhor opção.
+Não peça mais o equipamento encostando no corpo — foi isso que embolou a
+segunda tentativa do remo.
+
+### Cuidado: o original do surf tem marca d'água
+
+`img/sources/caloricio-surf.png` é uma regeração posterior à arte publicada e
+traz a palavra "nonatinho" escrita na prancha. A arte que está no ar veio de um
+original anterior, limpo, que não temos mais. **Não reprocesse o surf** sem
+antes gerar um original novo sem marca d'água.
+
+---
+
 ## 2c. Resultado da rodada — 2 entraram, 2 precisam voltar
 
 **Cardio e Pilates entraram** e já estão no ar. **Jiu-jitsu e Remo voltaram**,
@@ -225,7 +253,38 @@ crossed over the chest, closed by a black belt tied in a knot at the waist,
 matching white gi pants that end above the ankles, and bare feet.
 ```
 
-### Remo — precisa voltar: a alça no chão é apagada pelo pipeline
+### Remo — 3ª tentativa: a corrente não pode passar abaixo dos pés
+
+**Situação:** a 1ª tentativa (alça solta no chão) era a certa — ela só foi
+recusada porque o pipeline apagava objeto solto, o que já está resolvido (2d). A
+2ª tentativa, com a alça encostando no corpo, embolou: saíram duas barras pretas
+cruzando as pernas e as mãos voltaram a segurar. **Voltamos para a 1ª**, que já
+está em `img/sources/caloricio-remo.png`.
+
+Falta pouco: nela a corrente se estende **abaixo da linha dos pés**, e aí o
+personagem precisa de 449px de canvas abaixo dos olhos, contra 435 disponíveis.
+São 14px — só o rabo da corrente. Peça de novo com essa única restrição a mais:
+
+```
+Same character, same rules as before. New outfit: indoor rowing (ergometer).
+
+Both hands empty and relaxed at his sides — he does NOT hold the handle. Do not
+draw any bar crossing his fists or his legs. Exactly ONE handle in the image per
+character.
+
+Outfit worn on the body: a sleeveless rowing singlet (a snug one-piece athletic
+top) with the flame logo, short compression shorts, and a sweatband on one wrist.
+
+Equipment: the black handle of a rowing machine with a short chain, lying flat
+on the ground next to his foot, separate from his body and not touching it.
+
+CRITICAL FRAMING: the handle and the chain must sit ON THE SAME GROUND LINE as
+his feet. Nothing may extend below the level of the soles of his shoes — the
+lowest point of the whole drawing must be his shoes, not the chain. Keep the
+chain short and beside the shoe, never trailing down past it.
+```
+
+### (histórico) Remo — 2ª tentativa: a alça no chão era apagada pelo pipeline
 
 O desenho veio exatamente como pedi: alça preta com corrente, no chão, longe
 das mãos. O problema é que **objeto solto no chão não sobrevive ao pipeline**.

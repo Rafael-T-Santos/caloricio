@@ -265,7 +265,22 @@ function resize(img, targetW) {
 // tocam, o corte no meio leva um pedaço do vizinho junto (ex: o halter do outro
 // Caloricio na musculação). Mantém só componentes com pelo menos `minRatio` do
 // tamanho do maior, então um acessório legitimamente separado sobreviveria.
-function keepLargestComponent(img, minRatio = 0.2) {
+// Limpa a metade recortada: mantém o personagem, mantém os objetos que o
+// desenho quis (bola, garrafinha, alça do remo) e joga fora o resto.
+//
+// O corte é 1% do tamanho do personagem, e não é chute. Medindo os componentes
+// das 50 metades de todas as artes: os objetos de verdade são 3,6% (garrafinha
+// do cardio), 5,2% (alça do remo) e 7,3% (bola do vôlei); o maior lixo é um
+// risco de 96px, 0,012%. Entre 0,012% e 3,6% não existe nada, então 1% cai no
+// meio do vazio, com folga de 3,6x para um lado e 83x para o outro.
+//
+// `ladoInterno` diz onde a imagem foi cortada ao meio ('esq' corta na direita,
+// 'dir' corta na esquerda). Componente que encosta ali é pedaço do personagem
+// vizinho invadindo, e sai independente do tamanho — é a única coisa que o
+// tamanho sozinho não distingue de um objeto legítimo.
+function keepLargestComponent(img, opts = {}) {
+  const { minRatio = 0.01, ladoInterno = null } =
+    typeof opts === 'number' ? { minRatio: opts } : opts;
   const { width: w, height: h, data } = img;
   const label = new Int32Array(w * h).fill(-1);
   const sizes = [];
@@ -275,21 +290,31 @@ function keepLargestComponent(img, minRatio = 0.2) {
     const stack = [i];
     label[i] = id;
     let n = 0;
+    let minX = w;
+    let maxX = -1;
     while (stack.length) {
       const p = stack.pop();
       n++;
       const x = p % w;
       const y = (p / w) | 0;
+      if (x < minX) minX = x;
+      if (x > maxX) maxX = x;
       if (x > 0 && label[p - 1] === -1 && data[(p - 1) * 4 + 3] > 16) { label[p - 1] = id; stack.push(p - 1); }
       if (x < w - 1 && label[p + 1] === -1 && data[(p + 1) * 4 + 3] > 16) { label[p + 1] = id; stack.push(p + 1); }
       if (y > 0 && label[p - w] === -1 && data[(p - w) * 4 + 3] > 16) { label[p - w] = id; stack.push(p - w); }
       if (y < h - 1 && label[p + w] === -1 && data[(p + w) * 4 + 3] > 16) { label[p + w] = id; stack.push(p + w); }
     }
-    sizes.push(n);
+    sizes.push({ n, minX, maxX });
   }
   if (!sizes.length) return 0;
-  const maior = Math.max(...sizes);
-  const manter = sizes.map((n) => n >= maior * minRatio);
+  const maior = Math.max(...sizes.map((c) => c.n));
+  const manter = sizes.map((c) => {
+    if (c.n === maior) return true; // o personagem
+    if (c.n < maior * minRatio) return false;
+    if (ladoInterno === 'esq' && c.maxX >= w - 1) return false; // vazou do vizinho
+    if (ladoInterno === 'dir' && c.minX <= 0) return false;
+    return true;
+  });
   let apagados = 0;
   for (let i = 0; i < w * h; i++) {
     const id = label[i];
