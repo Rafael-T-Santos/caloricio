@@ -234,5 +234,14 @@ if (suportaWebp()) definirFormatoImagem('webp');
 // em vez da descrição da fantasia genérica.
 aplicarMascote({ ...estadoDoMascote(null, null), descricao: DESCRICOES_VISUAL.neutro });
 restaurarDados();
+
+// Offline: o app é usado na academia, onde o sinal costuma ser ruim. Falha aqui
+// não pode derrubar nada — sem service worker o site simplesmente funciona
+// online, como antes. Só roda em contexto seguro (HTTPS ou localhost).
+if ('serviceWorker' in navigator && window.isSecureContext) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(() => {});
+  });
+}
 agendarPulinho();
 agendarPiscada();

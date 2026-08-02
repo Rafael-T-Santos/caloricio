@@ -1,0 +1,32 @@
+{
+  "name": "Caloricio — Calculadora de Calorias",
+  "short_name": "Caloricio",
+  "description": "Calculadora de gasto calórico por exercício do desafio do time",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#faf9f6",
+  "theme_color": "#84cc16",
+  "lang": "pt-BR",
+  "icons": [
+    {
+      "src": "img/icone-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icone-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "img/icone-512-mascarado.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

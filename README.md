@@ -42,6 +42,8 @@ e o motor de regras do mascote.
 | `mascote.js` | Qual fantasia vestir e quando ficar desconfiado. Sem DOM. |
 | `seletor.js` | Seletor de exercício em dois níveis (categoria → exercício). |
 | `app.js` | Única camada que toca o DOM. |
+| `preferencias.js` | Guarda os dados pessoais entre visitas. |
+| `sw.js` | Service worker: faz o app abrir e calcular sem rede. |
 | `tools/` | Pipeline de arte (só roda na máquina, não vai pro navegador). |
 
 O seletor é próprio em vez de `<select>` porque o picker nativo do Android
@@ -57,9 +59,19 @@ node tools/gerar-artes.cjs musculacao caminhada    # um ou vários nomes
 
 O pipeline separa os dois personagens, remove o fundo branco por flood-fill
 das bordas, elimina a marca d'água da IA, descarta fragmentos que vazaram do
-personagem vizinho, normaliza em 520x620 com os pés na mesma linha e grava em
+personagem vizinho, normaliza em 690x740 ancorando pela distância entre os olhos e grava em
 `img/`. Sai de ~4,8MB para ~130KB por arte. É determinístico: rodar de novo na
 mesma origem gera o mesmo arquivo.
+
+### Convertendo para WebP
+
+O site serve WebP (~70% menor que o PNG, visualmente idêntico nesta arte
+chapada) e mantém o PNG como fallback; `app.js` detecta o suporte e escolhe.
+
+Não existe encoder WebP em Node puro, então a conversão passa pelo canvas do
+navegador. Depois de gerar arte nova, rode o servidor local com o endpoint de
+gravação e converta pelo navegador — os testes acusam se algum arquivo existir
+só num dos dois formatos.
 
 ### Quadro de piscada
 
