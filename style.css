@@ -650,3 +650,45 @@ body.sem-rolagem {
   font-weight: 700;
   color: var(--color-fraco);
 }
+
+.dica {
+  font-weight: 400;
+  font-size: 0.78rem;
+  color: var(--color-fraco);
+}
+
+/* Atalhos de duração: horizontal, alvo de toque confortável, e o escolhido
+   fica marcado pra ficar claro qual valor está no campo. */
+.atalhos {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.atalhos button {
+  flex: 1;
+  min-height: 40px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--color-accent-dark);
+  background: var(--color-card);
+  border: var(--borda-campo) solid var(--color-borda);
+  border-radius: var(--raio-campo);
+  cursor: pointer;
+}
+
+.atalhos button:hover {
+  background: var(--color-selecionado);
+}
+
+.atalhos button:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 1px;
+}
+
+.atalhos button[aria-pressed='true'] {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-sobre-accent);
+}

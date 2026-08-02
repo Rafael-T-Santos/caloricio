@@ -71,7 +71,7 @@
 
     <form id="form" novalidate>
       <div class="campo">
-        <label for="sexo">Sexo</label>
+        <label for="sexo">Sexo <span class="dica">usado no cálculo da TMB</span></label>
         <select id="sexo" name="sexo" required>
           <option value="M">Masculino</option>
           <option value="F">Feminino</option>
@@ -114,6 +114,15 @@
       <div class="campo">
         <label for="duracao">Duração da atividade (minutos)</label>
         <input type="number" id="duracao" name="duracao" inputmode="numeric" required />
+        <!--
+          Único campo que ainda é digitado toda vez (os dados pessoais voltam
+          sozinhos), e quem registra diário costuma repetir as mesmas durações.
+        -->
+        <div class="atalhos" id="atalhos-duracao">
+          <button type="button" data-min="30">30 min</button>
+          <button type="button" data-min="45">45 min</button>
+          <button type="button" data-min="60">60 min</button>
+        </div>
         <p class="erro" id="erro-duracao"></p>
       </div>
 

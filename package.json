@@ -4,6 +4,10 @@
   "description": "Calculadora de gasto calórico com o mascote Caloricio",
   "type": "module",
   "scripts": {
-    "test": "node --test"
+    "test": "node --test",
+    "test:e2e": "node --test e2e.spec.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
   }
 }

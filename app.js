@@ -1,7 +1,12 @@
 // Camada de UI: única parte que toca o DOM. calc.js e mascote.js são puros.
 // Todo conteúdo dinâmico entra via textContent — nunca innerHTML.
 import { computeBMR, computeGasto, validarCampos, agruparPorCategoria } from './calc.js';
-import { estadoDoMascote, DESCRICOES_VISUAL, definirFormatoImagem } from './mascote.js';
+import {
+  estadoDoMascote,
+  DESCRICOES_VISUAL,
+  definirFormatoImagem,
+  caminhoImagem,
+} from './mascote.js';
 import { criarSeletorExercicio } from './seletor.js';
 import { criarPreferencias, CAMPOS } from './preferencias.js';
 import { compartilharCartao } from './cartao.js';
@@ -40,6 +45,16 @@ function duracaoAtual() {
 let fimDaReacao = null;
 let estadoAtual = null;
 
+// Se uma arte não carregar (arquivo faltando, deploy parcial, rede ruim antes
+// do service worker cachear), o mascote vira ícone quebrado e fica assim. Cai
+// na arte genérica. O guard evita laço: se a própria genérica falhar, para.
+mascoteImg.addEventListener('error', () => {
+  const generico = caminhoImagem('neutro', false);
+  if (mascoteImg.getAttribute('src') === generico) return;
+  mascoteImg.src = generico;
+  mascoteImg.alt = DESCRICOES_VISUAL.neutro;
+});
+
 function aplicarMascote(estado) {
   const mudou = mascoteImg.getAttribute('src') !== estado.imagem;
   estadoAtual = estado;
@@ -66,13 +81,33 @@ function mostrarErros(erros) {
   }
 }
 
+const duracaoInput = document.getElementById('duracao');
+const atalhos = document.getElementById('atalhos-duracao');
+
 // A reação em tempo real ao escolher o exercício acontece no callback
 // aoEscolher do seletor. Aqui só falta reavaliar o "desconfiado" quando a
 // duração muda depois de o exercício já estar escolhido.
-document.getElementById('duracao').addEventListener('input', () => {
+function duracaoMudou() {
+  // marca o atalho correspondente, ou nenhum se o valor foi digitado à mão
+  const atual = duracaoInput.value;
+  for (const b of atalhos.querySelectorAll('button')) {
+    b.setAttribute('aria-pressed', String(b.dataset.min === atual));
+  }
   const item = exercicioSelecionado();
   if (!item) return;
   aplicarMascote(estadoDoMascote(item.categoria, duracaoAtual(), item.nome));
+}
+
+duracaoInput.addEventListener('input', duracaoMudou);
+
+atalhos.addEventListener('click', (e) => {
+  const botao = e.target.closest('button[data-min]');
+  if (!botao) return;
+  duracaoInput.value = botao.dataset.min;
+  duracaoMudou();
+  // limpa o erro do campo na hora: o atalho sempre põe um valor válido
+  document.getElementById('erro-duracao').textContent = '';
+  duracaoInput.closest('.campo').classList.remove('invalido');
 });
 
 form.addEventListener('submit', (e) => {
