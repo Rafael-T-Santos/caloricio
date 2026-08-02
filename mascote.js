@@ -77,13 +77,28 @@ export function podePiscar(visual, desconfiado) {
   return !VISUAIS_SEM_PISCADA.has(chave);
 }
 
-// Cada visual vira até 3 arquivos: img/caloricio-<visual>-normal.png,
-// -desconfiado.png e -blink.png. 'neutro' (antes de qualquer seleção) usa a
-// mesma arte genérica.
+// WebP é ~70% menor que o PNG equivalente e visualmente idêntico nesta arte
+// chapada, mas o PNG fica no disco como rede de segurança para navegador antigo.
+// app.js detecta o suporte e chama definirFormatoImagem antes do primeiro
+// desenho; sem chamar nada, o padrão seguro é PNG.
+let formatoImagem = 'png';
+
+export function definirFormatoImagem(formato) {
+  if (formato !== 'png' && formato !== 'webp') throw new Error(`formato inválido: ${formato}`);
+  formatoImagem = formato;
+}
+
+export function formatoAtual() {
+  return formatoImagem;
+}
+
+// Cada visual vira até 3 arquivos: img/caloricio-<visual>-normal.<ext>,
+// -desconfiado e -blink. 'neutro' (antes de qualquer seleção) usa a mesma arte
+// genérica.
 export function caminhoImagem(visual, desconfiado, piscando = false) {
   const chave = visual === 'neutro' ? FANTASIA_GENERICA : visual;
   const estado = desconfiado ? 'desconfiado' : piscando ? 'blink' : 'normal';
-  return `img/caloricio-${chave}-${estado}.png`;
+  return `img/caloricio-${chave}-${estado}.${formatoImagem}`;
 }
 
 // Descrições por visual, usadas como texto alternativo pra leitor de tela.

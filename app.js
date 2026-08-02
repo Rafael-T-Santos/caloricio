@@ -1,7 +1,7 @@
 // Camada de UI: única parte que toca o DOM. calc.js e mascote.js são puros.
 // Todo conteúdo dinâmico entra via textContent — nunca innerHTML.
 import { computeBMR, computeGasto, validarCampos, agruparPorCategoria } from './calc.js';
-import { estadoDoMascote, DESCRICOES_VISUAL } from './mascote.js';
+import { estadoDoMascote, DESCRICOES_VISUAL, definirFormatoImagem } from './mascote.js';
 import { criarSeletorExercicio } from './seletor.js';
 import { criarPreferencias, CAMPOS } from './preferencias.js';
 
@@ -214,6 +214,21 @@ document.getElementById('esquecer').addEventListener('click', () => {
   lembrete.hidden = true;
   document.getElementById('idade').focus();
 });
+
+// Detecta WebP de forma síncrona: canvas.toDataURL devolve o PNG pedido de
+// volta quando o formato não é suportado. Precisa ser antes do primeiro
+// desenho, senão o mascote carregaria em PNG e trocaria de arquivo depois.
+function suportaWebp() {
+  try {
+    const c = document.createElement('canvas');
+    c.width = c.height = 1;
+    return c.toDataURL('image/webp').startsWith('data:image/webp');
+  } catch {
+    return false;
+  }
+}
+
+if (suportaWebp()) definirFormatoImagem('webp');
 
 // Estado inicial: a arte genérica, mas com a descrição de "ainda não escolheu"
 // em vez da descrição da fantasia genérica.

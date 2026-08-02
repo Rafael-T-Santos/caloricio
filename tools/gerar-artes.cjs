@@ -132,3 +132,7 @@ if (require.main === module) {
 }
 
 module.exports = { processar, DISTANCIA_OLHOS_ALVO, OLHOS_Y_ALVO, CANVAS_W, CANVAS_H };
+
+// NOTA: depois de gerar/regerar arte, converta para WebP.
+// Não há encoder WebP em Node puro nem binário local; a conversão é feita pelo
+// canvas do navegador. Ver "Convertendo para WebP" no README.

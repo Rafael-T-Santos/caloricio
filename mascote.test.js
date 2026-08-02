@@ -14,6 +14,8 @@ import {
   estadoDoMascote,
   caminhoImagem,
   podePiscar,
+  definirFormatoImagem,
+  formatoAtual,
 } from './mascote.js';
 
 test('nenhuma regra bate → null (duração normal)', () => {
@@ -74,22 +76,39 @@ test('todo visual tem descrição — senão o alt vira "undefined"', () => {
   }
 });
 
-test('toda imagem referenciada existe no disco', () => {
+test('toda imagem referenciada existe nos dois formatos', () => {
   const visuais = [...Object.values(FANTASIAS), FANTASIA_GENERICA];
-  for (const v of visuais) {
-    for (const desconfiado of [false, true]) {
-      const caminho = caminhoImagem(v, desconfiado);
-      assert.ok(fs.existsSync(caminho), `arquivo faltando: ${caminho}`);
+  for (const formato of ['png', 'webp']) {
+    definirFormatoImagem(formato);
+    for (const v of visuais) {
+      for (const desconfiado of [false, true]) {
+        const caminho = caminhoImagem(v, desconfiado);
+        assert.ok(fs.existsSync(caminho), `arquivo faltando: ${caminho}`);
+      }
     }
   }
+  definirFormatoImagem('png');
 });
 
-test('todo visual que pisca tem o quadro de piscada no disco', () => {
-  for (const v of [...Object.values(FANTASIAS), FANTASIA_GENERICA]) {
-    if (!podePiscar(v, false)) continue;
-    const caminho = caminhoImagem(v, false, true);
-    assert.ok(fs.existsSync(caminho), `quadro de piscada faltando: ${caminho}`);
+test('definirFormatoImagem troca a extensão e recusa formato inválido', () => {
+  definirFormatoImagem('webp');
+  assert.equal(formatoAtual(), 'webp');
+  assert.ok(caminhoImagem('corrida', false).endsWith('.webp'));
+  definirFormatoImagem('png');
+  assert.ok(caminhoImagem('corrida', false).endsWith('.png'));
+  assert.throws(() => definirFormatoImagem('gif'));
+});
+
+test('todo visual que pisca tem o quadro de piscada nos dois formatos', () => {
+  for (const formato of ['png', 'webp']) {
+    definirFormatoImagem(formato);
+    for (const v of [...Object.values(FANTASIAS), FANTASIA_GENERICA]) {
+      if (!podePiscar(v, false)) continue;
+      const caminho = caminhoImagem(v, false, true);
+      assert.ok(fs.existsSync(caminho), `quadro de piscada faltando: ${caminho}`);
+    }
   }
+  definirFormatoImagem('png');
 });
 
 test('visual sem piscada não recebe quadro de piscada', () => {

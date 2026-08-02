@@ -31,7 +31,14 @@
         <div class="mascote-idle">
           <div class="mascote-reacao">
             <div class="mascote-flutua">
-              <img id="mascote-img" src="img/caloricio-gpt-normal.png"
+              <!--
+                Começa com um pixel transparente em vez de apontar pra uma arte:
+                app.js escolhe entre WebP e PNG antes do primeiro desenho, e um
+                src real aqui faria o navegador baixar o PNG (122KB) só pra
+                descartá-lo em seguida. width/height seguram o espaço no layout.
+              -->
+              <img id="mascote-img"
+                   src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
                    alt="Caloricio te esperando começar" width="690" height="740" />
             </div>
           </div>
