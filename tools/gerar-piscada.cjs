@@ -44,8 +44,17 @@ function acharOlhos(img) {
     }
     comps.push({ n, minX, maxX, minY, maxY, cx: (minX + maxX) / 2, cy: (minY + maxY) / 2, w: maxX - minX + 1, h: maxY - minY + 1 });
   }
+  // Limiares relativos à altura da imagem: a mesma função roda tanto no
+  // original recortado (~1200px) quanto na arte já normalizada (~640px).
+  const areaMin = 0.0006 * h * h;
+  const ladoMin = 0.025 * h;
   const candidatos = comps
-    .filter((c) => c.n > 400 && c.w > 14 && c.h > 14 && c.w / c.h > 0.5 && c.w / c.h < 2.5 && c.cy > 150 && c.cy < 260)
+    .filter(
+      (c) =>
+        c.n > areaMin && c.w > ladoMin && c.h > ladoMin &&
+        c.w / c.h > 0.5 && c.w / c.h < 2.5 &&
+        c.cy > h * 0.12 && c.cy < h * 0.55
+    )
     .sort((a, b) => b.n - a.n);
   for (let i = 0; i < candidatos.length; i++) {
     for (let j = i + 1; j < candidatos.length; j++) {

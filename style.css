@@ -26,6 +26,17 @@ body {
   padding: 24px 16px 48px;
 }
 
+/* Fundo opaco e acima do mascote na pilha: em repouso o arco da corda de pular
+   passa 20px abaixo daqui, mas o pulinho levanta o mascote 48px (translate mais
+   o scale com origem na base) e o arco subiria por cima do texto. Assim ele
+   tuca atrás do cabeçalho no pico do salto, em vez de custar 30px de espaço
+   morto permanente para as outras 20 fantasias. */
+.topo {
+  position: relative;
+  z-index: 2;
+  background: var(--color-bg);
+}
+
 .topo h1 {
   font-size: 2.2rem;
   font-weight: 900;
@@ -34,15 +45,20 @@ body {
 }
 
 .subtitulo {
-  margin: 4px 0 20px;
+  margin: 4px 0 8px;
   font-size: 1rem;
 }
 
 /* ---------- Mascote ---------- */
 
 .mascote {
+  /* Sem margem negativa aqui: o canvas reserva espaço acima da cabeça para o
+     arco da corda de pular, que começa a só 13px do topo da imagem, e as
+     animações ainda levantam o mascote até 29px (pulinho + flutuação). Puxar
+     pra cima faz o arco cruzar o subtítulo no meio do salto. O respiro vem de
+     um subtítulo mais justo, logo acima. */
   margin: 0 auto 16px;
-  width: 230px;
+  width: 300px;
   text-align: center;
 }
 

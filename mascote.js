@@ -30,7 +30,9 @@ export const FANTASIAS = {
   Bike: 'bike',
   'Natação': 'natacao',
   'Musculação': 'musculacao',
-  'Funcional/HIIT': 'funcional',
+  // A categoria usa o visual de crossfit (mãos livres); a arte com a corda
+  // girando é exclusiva do exercício "Pular corda".
+  'Funcional/HIIT': 'crossfit',
   Lutas: 'lutas',
   Esportes: 'esportes',
   Cardio: 'cardio',
@@ -43,7 +45,20 @@ export const FANTASIAS = {
 // por exemplo, só mudam de velocidade, não de roupa.
 // Para adicionar: uma linha aqui, uma em DESCRICOES_VISUAL, e os arquivos
 // -normal/-desconfiado/-blink em img/. Os testes acusam se faltar qualquer um.
-export const FANTASIAS_POR_EXERCICIO = {};
+export const FANTASIAS_POR_EXERCICIO = {
+  'Spinning (bike indoor)': 'spinning',
+  'Pular corda (moderado)': 'pularcorda',
+  'Boxe (treino/sparring)': 'boxe',
+  'Muay Thai / Kickboxing': 'muaythai',
+  'Hidroginástica': 'hidroginastica',
+  'Surf (prática geral)': 'surf',
+  'Dança (geral)': 'danca',
+  Zumba: 'danca',
+  'Vôlei (recreativo)': 'volei',
+  'Basquete (recreativo)': 'basquete',
+  'Tênis': 'tenis',
+  'Escalada (indoor)': 'escalada',
+};
 
 // Rede de segurança: categoria sem fantasia mapeada cai aqui em vez de pedir
 // uma imagem que não existe. Também é o visual do estado inicial.
@@ -80,7 +95,18 @@ export const DESCRICOES_VISUAL = {
   bike: 'Caloricio de capacete e roupa de ciclismo',
   natacao: 'Caloricio de óculos de natação, touca e sunga',
   musculacao: 'Caloricio de regata, cinto de levantamento e luvas, com um haltere',
-  funcional: 'Caloricio de camiseta de treino com uma corda de pular',
+  crossfit: 'Caloricio de camiseta de compressão, cinto de treino e joelheiras',
+  spinning: 'Caloricio de regata de ciclismo e faixa na testa, com toalha no ombro',
+  pularcorda: 'Caloricio girando uma corda de pular por cima da cabeça',
+  boxe: 'Caloricio de shorts de boxe e luvas vermelhas em posição de guarda',
+  muaythai: 'Caloricio de shorts de muay thai, faixa na cabeça e bandagens nas mãos',
+  hidroginastica: 'Caloricio de touca com halteres de espuma para hidroginástica',
+  surf: 'Caloricio de roupa de surf com a prancha em pé ao lado',
+  danca: 'Caloricio de regata solta e tênis, pronto pra dançar',
+  volei: 'Caloricio de uniforme de vôlei com joelheiras e uma bola ao lado',
+  basquete: 'Caloricio de uniforme de basquete com uma bola ao lado do pé',
+  tenis: 'Caloricio de polo branco e viseira, segurando uma raquete',
+  escalada: 'Caloricio de cadeirinha de escalada com saquinho de magnésio',
   lutas: 'Caloricio de kimono com faixa preta e luvas de boxe',
   esportes: 'Caloricio de uniforme de futebol com uma bola ao lado do pé',
   cardio: 'Caloricio com toalha no pescoço e garrafinha de água',
