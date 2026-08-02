@@ -108,7 +108,19 @@ function processar(nome, avisos) {
     const { img: final, perdidos } = ancorar(
       img, CANVAS_W, CANVAS_H, ancoraX, ancoraY, OLHOS_X_ALVO, OLHOS_Y_ALVO
     );
-    if (perdidos > 0) avisos.push(`${nome}-${m.estado}: ${perdidos}px cortados fora do canvas`);
+    // Recusa gravar em vez de só avisar. Antes isto era um aviso no fim da
+    // execução e o arquivo cortado ia pro disco do mesmo jeito — foi assim que
+    // um jiu-jitsu sem pés quase entrou no site. Perder pixel aqui significa
+    // que o personagem foi desenhado fora da proporção das outras fantasias, e
+    // encolher só ele quebraria a ancoragem pelos olhos. O caminho é regerar a
+    // arte, não aceitar o corte.
+    if (perdidos > 0) {
+      avisos.push(
+        `${nome}-${m.estado}: NÃO GRAVADO — ${perdidos}px ficariam fora do canvas ` +
+          `(${CANVAS_W}x${CANVAS_H}). O personagem está fora de proporção; regere a arte.`
+      );
+      continue;
+    }
     t.quantize(final, 8);
     const destino = path.join('img', `caloricio-${nome}-${m.estado}.png`);
     const out = t.encodePNG(final);
